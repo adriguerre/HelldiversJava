@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    container_name: helldivers-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - env.properties
+    environment: #Change bd references to docker DB
+      SPRING_DATASOURCE_URL: ${POSTGRES_DB_DOCKER}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: helldivers_project
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./helldivers_db.sql:/docker-entrypoint-initdb.d/helldivers_db.sql
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
