@@ -4,6 +4,8 @@ package com.example.helldivers.domain;
 import com.example.helldivers.enums.BiomeType;
 import com.example.helldivers.enums.FactionType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 @Entity
@@ -19,7 +21,9 @@ public class Planet {
     private Double max_health;
     private Double current_health;
     private Double regen_per_hour;
+    @Enumerated(EnumType.STRING)
     private BiomeType biome;
+    @Enumerated(EnumType.STRING)
     private FactionType owner_faction;
     private String hazard_types;
 

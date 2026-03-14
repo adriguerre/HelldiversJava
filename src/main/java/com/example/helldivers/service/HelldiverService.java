@@ -1,7 +1,6 @@
 package com.example.helldivers.service;
 
 import com.example.helldivers.domain.Helldiver;
-import com.example.helldivers.player.Player;
 import com.example.helldivers.repository.HelldiverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

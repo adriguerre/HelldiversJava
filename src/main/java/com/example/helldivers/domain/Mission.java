@@ -3,9 +3,7 @@ package com.example.helldivers.domain;
 import com.example.helldivers.enums.FactionType;
 import com.example.helldivers.enums.MissionType;
 import com.example.helldivers.enums.ResultType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
@@ -16,11 +14,14 @@ public class Mission {
     private Integer mission_id;
     private Integer planet_id;
     private Integer squad_id;
+    @Enumerated(EnumType.STRING)
     private MissionType mission_type;
     private Integer difficulty;
+    @Enumerated(EnumType.STRING)
     private FactionType enemy_faction;
     private Timestamp started_at;
     private Timestamp ended_at;
+    @Enumerated(EnumType.STRING)
     private ResultType mission_result;
     private Integer samples_tier_1_found;
     private Integer samples_tier_2_found;

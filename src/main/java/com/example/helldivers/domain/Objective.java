@@ -2,6 +2,8 @@ package com.example.helldivers.domain;
 
 import com.example.helldivers.enums.ObjectiveType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 
 import java.sql.Timestamp;
@@ -12,6 +14,7 @@ public class Objective {
     @Id
     private Integer objective_id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private ObjectiveType objective_type;
     private String description;
     private Boolean is_primary;
