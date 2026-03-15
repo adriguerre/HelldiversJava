@@ -1,7 +1,8 @@
 package com.example.helldivers.controllers;
 
+import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.Helldiver;
-import com.example.helldivers.player.Player;
+import com.example.helldivers.service.AccountService;
 import com.example.helldivers.service.HelldiverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -13,21 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/helldivers")
-public class HelldiverController {
+@RequestMapping("/accounts")
+public class AccountController {
 
-    private final HelldiverService helldiverService;
+    private final AccountService accountService;
 
     @Autowired
     @Lazy
-    public HelldiverController(HelldiverService helldiverService) {
-        this.helldiverService = helldiverService;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getHelldivers(){
-        List<Helldiver> helldivers = helldiverService.getAllHelldivers();
 
-        return ResponseEntity.ok(helldivers);
+    @GetMapping
+    public ResponseEntity<?> getAccounts(){
+        List<Account> accounts = accountService.getAllAccounts();
+
+        return ResponseEntity.ok(accounts);
     }
 }
