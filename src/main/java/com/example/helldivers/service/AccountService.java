@@ -2,6 +2,7 @@ package com.example.helldivers.service;
 
 import com.example.helldivers.domain.Account;
 import com.example.helldivers.repository.AccountRepository;
+import com.example.helldivers.specification.AccountSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public List<Account> getAllAccounts(){
-        return accountRepository.findAll();
+    public List<Account> getAccountsFiltered(String region, String platformType, Boolean isBanned) {
+        return accountRepository.findAll(
+                AccountSpecification.withFilters(region, platformType, isBanned)
+        );
     }
-
     public Optional<Account> getAccountById(Integer id){
         return accountRepository.findById(id);
     }

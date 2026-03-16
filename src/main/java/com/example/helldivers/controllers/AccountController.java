@@ -31,10 +31,14 @@ public class AccountController {
 
 
     @GetMapping
-    public ResponseEntity<?> getAccounts(){
-        List<Account> accounts = accountService.getAllAccounts();
+    public ResponseEntity<?> getAccounts(
+            @RequestParam(required = false) String region,
+            @RequestParam(required = false) String platform_type,
+            @RequestParam(required = false) Boolean is_banned) {
 
-        if(accounts.isEmpty())
+        List<Account> accounts = accountService.getAccountsFiltered(region, platform_type, is_banned);
+
+        if (accounts.isEmpty())
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.ok(accounts);
