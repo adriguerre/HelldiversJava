@@ -27,13 +27,15 @@ public class Account {
     private String ban_reason;
     private Timestamp created_at;
     private Timestamp last_login;
+    @JsonProperty("password")
+    private String encryptedPassword;
 
     public Account() {
     }
 
     public Account(Integer account_id, String platform_id, PlatformType platformType,
                    String email, String region, boolean is_banned, Timestamp created_at,
-                   Timestamp last_login) {
+                   Timestamp last_login, String encryptedPassword) {
         this.account_id = account_id;
         this.platform_id = platform_id;
         this.platform_type = platformType;
@@ -42,7 +44,9 @@ public class Account {
         this.is_banned = is_banned;
         this.created_at = created_at;
         this.last_login = last_login;
+        this.encryptedPassword = encryptedPassword;
     }
+
 
     public Integer getAccount_id() {
         return account_id;
@@ -122,5 +126,13 @@ public class Account {
 
     public void setLast_login(Timestamp last_login) {
         this.last_login = last_login;
+    }
+
+    public String getPassword() {
+        return encryptedPassword;
+    }
+
+    public void setPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }

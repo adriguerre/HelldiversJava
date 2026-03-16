@@ -1,5 +1,6 @@
 package com.example.helldivers.controllers;
 
+import com.example.helldivers.DTO.LoginRequest;
 import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.Helldiver;
 import com.example.helldivers.service.AccountService;
@@ -54,6 +55,15 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with ID: [" + accountId + "] not found ");
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        boolean valid = accountService.login(loginRequest.getEmail(), loginRequest.getPassword());
+
+        if (valid)
+            return ResponseEntity.ok("Login successful");
+        else
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+    }
 
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody @Valid Account account){
