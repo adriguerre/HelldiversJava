@@ -2,10 +2,9 @@ package com.example.helldivers.domain;
 
 
 import com.example.helldivers.enums.PlatformType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -14,11 +13,14 @@ import java.sql.Timestamp;
 public class Account {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer account_id;
     private String platform_id;
     @Enumerated(EnumType.STRING)
-    private PlatformType platformType;
+    @JsonProperty("platform_type")
+    private PlatformType platform_type;
     private String psn_steam_id;
+    @NotBlank(message = "Email is required")
     private String email;
     private String region;
     private boolean is_banned;
@@ -34,7 +36,7 @@ public class Account {
                    Timestamp last_login) {
         this.account_id = account_id;
         this.platform_id = platform_id;
-        this.platformType = platformType;
+        this.platform_type = platformType;
         this.email = email;
         this.region = region;
         this.is_banned = is_banned;
@@ -58,12 +60,12 @@ public class Account {
         this.platform_id = platform_id;
     }
 
-    public PlatformType getPlatformType() {
-        return platformType;
+    public PlatformType getPlatform_type() {
+        return platform_type;
     }
 
-    public void setPlatformType(PlatformType platformType) {
-        this.platformType = platformType;
+    public void setPlatform_type(PlatformType platformType) {
+        this.platform_type = platformType;
     }
 
     public String getPsn_steam_id() {

@@ -1,10 +1,7 @@
 package com.example.helldivers.domain;
 
 import com.example.helldivers.enums.LobbyType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
@@ -12,8 +9,8 @@ import java.sql.Timestamp;
 public class Squad {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer squad_id;
-
     private String session_id;
     private String lobby_code;
     private Integer max_players;

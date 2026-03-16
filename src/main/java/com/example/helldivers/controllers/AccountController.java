@@ -4,14 +4,18 @@ import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.Helldiver;
 import com.example.helldivers.service.AccountService;
 import com.example.helldivers.service.HelldiverService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/accounts")
@@ -30,6 +34,47 @@ public class AccountController {
     public ResponseEntity<?> getAccounts(){
         List<Account> accounts = accountService.getAllAccounts();
 
+        if(accounts.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
         return ResponseEntity.ok(accounts);
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<?> getAccountById(@PathVariable Integer accountId){
+        Optional<Account> account = accountService.getAccountById(accountId);
+
+        if(account.isPresent())
+            return ResponseEntity.ok(account);
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with ID: [" + accountId + "] not found ");
+    }
+
+
+    @PostMapping
+    public ResponseEntity<?> createAccount(@RequestBody @Valid Account account){
+
+        accountService.createOrModifyNewAccount(account);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{account_id}").buildAndExpand(account.getAccount_id()).toUri();
+
+        return ResponseEntity.created(location).body(account);
+    }
+
+    @PutMapping("/{accountId}")
+    public ResponseEntity<?> updateAccount(@PathVariable Integer accountId, @RequestBody Account account) {
+        account.setAccount_id(accountId);
+        Account updated = accountService.createOrModifyNewAccount(account);
+        return ResponseEntity.ok(updated);
+    }
+
+
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<?> deleteAccountById(@PathVariable Integer accountId){
+        Boolean accountDeleted = accountService.deleteAccountById(accountId);
+
+        if (accountDeleted)
+            return ResponseEntity.ok("Account with ID: [" + accountId + "] deleted successfully");
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account with ID: [" + accountId + "] not found");
     }
 }

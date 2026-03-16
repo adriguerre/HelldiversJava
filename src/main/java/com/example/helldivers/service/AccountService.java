@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Lazy
@@ -24,5 +25,23 @@ public class AccountService {
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
+
+    public Optional<Account> getAccountById(Integer id){
+        return accountRepository.findById(id);
+    }
+
+    public Account createOrModifyNewAccount(Account account){
+        accountRepository.save(account);
+        return account;
+    }
+
+    public Boolean deleteAccountById(Integer accountId){
+        if (accountRepository.existsById(accountId)) {
+            accountRepository.deleteById(accountId);
+            return true;
+        }
+        return false;
+    }
+
 
 }

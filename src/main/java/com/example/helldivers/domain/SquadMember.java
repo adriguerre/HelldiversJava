@@ -1,9 +1,7 @@
 package com.example.helldivers.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
@@ -11,6 +9,7 @@ import java.sql.Timestamp;
 public class SquadMember {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer squad_member;
     private Integer squad_id;
     private Integer helldivers_id;

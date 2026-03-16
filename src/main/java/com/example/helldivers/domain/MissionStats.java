@@ -1,14 +1,13 @@
 package com.example.helldivers.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="mission_stats")
 public class MissionStats {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stat_id;
     private Integer mission_id;
     private Integer helldiver_id;

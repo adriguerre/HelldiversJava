@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 public class Mission {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mission_id;
     private Integer planet_id;
     private Integer squad_id;

@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public class Objective {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer objective_id;
     private String name;
     @Enumerated(EnumType.STRING)

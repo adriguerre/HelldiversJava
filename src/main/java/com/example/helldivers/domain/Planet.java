@@ -3,15 +3,13 @@ package com.example.helldivers.domain;
 
 import com.example.helldivers.enums.BiomeType;
 import com.example.helldivers.enums.FactionType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Planet {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer planet_id;
     private String name;
     private String sector;
