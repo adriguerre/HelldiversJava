@@ -1,6 +1,6 @@
 package com.example.helldivers.DTO;
 
-public class LoginRequest {
+public class LoginRequestDTO {
     private String email;
     private String password;
 

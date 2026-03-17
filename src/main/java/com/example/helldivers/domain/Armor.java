@@ -1,6 +1,7 @@
 package com.example.helldivers.domain;
 
 import com.example.helldivers.enums.ArmorSlot;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +16,10 @@ public class Armor {
     private Integer armor_rating;
     private Integer speed;
     private Integer staming_regen;
-    private Integer passive_id;
+    @ManyToOne
+    @JoinColumn(name = "passive_id")
+    @JsonProperty("passive")
+    private PassiveBonus passive;
     private Integer req_cost;
     private Integer super_credits_cost;
 
@@ -24,14 +28,14 @@ public class Armor {
     }
 
     public Armor(Integer armor_id, String name, ArmorSlot armor_slot, Integer armor_rating, Integer speed,
-                 Integer staming_regen, Integer passive_id, Integer req_cost, Integer super_credits_cost) {
+                 Integer staming_regen, PassiveBonus passive, Integer req_cost, Integer super_credits_cost) {
         this.armor_id = armor_id;
         this.name = name;
         this.armor_slot = armor_slot;
         this.armor_rating = armor_rating;
         this.speed = speed;
         this.staming_regen = staming_regen;
-        this.passive_id = passive_id;
+        this.passive = passive;
         this.req_cost = req_cost;
         this.super_credits_cost = super_credits_cost;
     }
@@ -84,12 +88,12 @@ public class Armor {
         this.staming_regen = staming_regen;
     }
 
-    public Integer getPassive_id() {
-        return passive_id;
+    public PassiveBonus getPassive_id() {
+        return passive;
     }
 
-    public void setPassive_id(Integer passive_id) {
-        this.passive_id = passive_id;
+    public void setPassive_id(PassiveBonus passive) {
+        this.passive = passive;
     }
 
     public Integer getReq_cost() {

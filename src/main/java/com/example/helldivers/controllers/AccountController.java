@@ -1,17 +1,13 @@
 package com.example.helldivers.controllers;
 
-import com.example.helldivers.DTO.LoginRequest;
+import com.example.helldivers.DTO.LoginRequestDTO;
 import com.example.helldivers.domain.Account;
-import com.example.helldivers.domain.Helldiver;
 import com.example.helldivers.service.AccountService;
-import com.example.helldivers.service.HelldiverService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -57,8 +53,8 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String token = accountService.login(loginRequest.getEmail(), loginRequest.getPassword());
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        String token = accountService.login(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
 
         if (token != null)
             return ResponseEntity.ok(Map.of("token", token));

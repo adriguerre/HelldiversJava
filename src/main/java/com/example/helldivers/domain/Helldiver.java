@@ -1,6 +1,7 @@
 package com.example.helldivers.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -11,8 +12,10 @@ public class Helldiver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer helldiver_id;
-
-    private Integer account_id;
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    @JsonProperty("account")
+    private Account account;
     private String callsign;
     private Integer level;
     private Integer xp_total;
@@ -37,12 +40,12 @@ public class Helldiver {
         this.helldiver_id = helldiver_id;
     }
 
-    public Integer getAccount_id() {
-        return account_id;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccount_id(Integer account_id) {
-        this.account_id = account_id;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getCallsign() {

@@ -1,6 +1,5 @@
 package com.example.helldivers.service;
 
-import com.example.helldivers.DTO.LoginRequest;
 import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.AccountRole;
 import com.example.helldivers.domain.Role;
@@ -11,10 +10,8 @@ import com.example.helldivers.security.JwtUtil;
 import com.example.helldivers.specification.AccountSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

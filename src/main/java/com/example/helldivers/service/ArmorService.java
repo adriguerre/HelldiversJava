@@ -23,4 +23,6 @@ public class ArmorService {
     public List<Armor> getAllArmors(ArmorSlot armorSlot, Integer passive_id){
         return armorRepository.findAll(ArmorSpecification.withFilters(armorSlot, passive_id));
     }
+
+
 }

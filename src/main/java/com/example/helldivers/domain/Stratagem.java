@@ -10,9 +10,7 @@ public class Stratagem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stratagem_id;
-
     private String name;
-
     @Enumerated(EnumType.STRING)
     private StratagemType category;
     private String input_sequence;

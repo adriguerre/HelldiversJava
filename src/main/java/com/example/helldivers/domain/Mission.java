@@ -3,6 +3,7 @@ package com.example.helldivers.domain;
 import com.example.helldivers.enums.FactionType;
 import com.example.helldivers.enums.MissionType;
 import com.example.helldivers.enums.ResultType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -13,7 +14,10 @@ public class Mission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mission_id;
-    private Integer planet_id;
+    @ManyToOne
+    @JoinColumn(name="planet_id")
+    @JsonProperty("planet")
+    private Planet planet;
     private Integer squad_id;
     @Enumerated(EnumType.STRING)
     private MissionType mission_type;
@@ -33,12 +37,12 @@ public class Mission {
 
     public Mission() {}
 
-    public Mission(Integer mission_id, Integer planet_id, Integer squad_id, MissionType mission_type,
+    public Mission(Integer mission_id, Planet planet, Integer squad_id, MissionType mission_type,
                    Integer difficulty, FactionType enemy_faction, Timestamp started_at, Timestamp ended_at,
                    ResultType mission_result, Integer samples_tier_1_found, Integer samples_tier_2_found,
                    Integer samples_tier_3_found, Integer xp_earned, Integer medals_earned) {
         this.mission_id = mission_id;
-        this.planet_id = planet_id;
+        this.planet= planet;
         this.squad_id = squad_id;
         this.mission_type = mission_type;
         this.difficulty = difficulty;
@@ -61,12 +65,12 @@ public class Mission {
         this.mission_id = mission_id;
     }
 
-    public Integer getPlanet_id() {
-        return planet_id;
+    public Planet getPlanet() {
+        return planet;
     }
 
-    public void setPlanet_id(Integer planet_id) {
-        this.planet_id = planet_id;
+    public void setPlanet_id(Planet planet) {
+        this.planet = planet;
     }
 
     public Integer getSquad_id() {

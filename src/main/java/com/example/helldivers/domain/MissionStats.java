@@ -1,5 +1,6 @@
 package com.example.helldivers.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,10 @@ public class MissionStats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stat_id;
     private Integer mission_id;
-    private Integer helldiver_id;
+    @ManyToOne
+    @JoinColumn(name="helldiver_id")
+    @JsonProperty("helldiver")
+    private Helldiver helldiver;
     private Integer kills;
     private Integer deaths;
     private Integer friendly_kills;
@@ -24,12 +28,12 @@ public class MissionStats {
     public MissionStats() {
     }
 
-    public MissionStats(Integer stat_id, Integer mission_id, Integer helldiver_id, Integer kills, Integer deaths,
+    public MissionStats(Integer stat_id, Integer mission_id, Helldiver helldiver, Integer kills, Integer deaths,
                         Integer friendly_kills, Integer shots_fired, Double accuracy_pct, Integer stratagems_used,
                         Double distance_travelled, Integer objectives_done) {
         this.stat_id = stat_id;
         this.mission_id = mission_id;
-        this.helldiver_id = helldiver_id;
+        this.helldiver = helldiver;
         this.kills = kills;
         this.deaths = deaths;
         this.friendly_kills = friendly_kills;
@@ -56,12 +60,12 @@ public class MissionStats {
         this.mission_id = mission_id;
     }
 
-    public Integer getHelldiver_id() {
-        return helldiver_id;
+    public Helldiver getHelldiver() {
+        return helldiver;
     }
 
-    public void setHelldiver_id(Integer helldiver_id) {
-        this.helldiver_id = helldiver_id;
+    public void setHelldiver(Helldiver helldiver_id) {
+        this.helldiver = helldiver;
     }
 
     public Integer getKills() {
