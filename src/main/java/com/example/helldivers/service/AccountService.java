@@ -2,7 +2,12 @@ package com.example.helldivers.service;
 
 import com.example.helldivers.DTO.LoginRequest;
 import com.example.helldivers.domain.Account;
+import com.example.helldivers.domain.AccountRole;
+import com.example.helldivers.domain.Role;
 import com.example.helldivers.repository.AccountRepository;
+import com.example.helldivers.repository.AccountRoleRepository;
+import com.example.helldivers.repository.RoleRepository;
+import com.example.helldivers.security.JwtUtil;
 import com.example.helldivers.specification.AccountSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,9 +23,16 @@ import java.util.Optional;
 @Lazy
 public class AccountService {
 
+    private AccountRepository accountRepository;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-    private AccountRepository accountRepository;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private AccountRoleRepository accountRoleRepository;
 
 
     @Autowired
@@ -39,22 +51,32 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public Account createOrModifyNewAccount(Account account){
+    public Account createOrModifyNewAccount(Account account) {
         if (account.getPassword() != null)
             account.setPassword(passwordEncoder.encode(account.getPassword()));
 
-        accountRepository.save(account);
-        return account;
+        Account saved = accountRepository.save(account);
+
+        Role userRole = roleRepository.findByName("USER");
+        AccountRole accountRole = new AccountRole(saved.getAccount_id().longValue(), userRole.getRole_id());
+        accountRoleRepository.save(accountRole);
+
+        return saved;
     }
 
-    public boolean login(String email, String password) {
+    public String login(String email, String password) {
         Optional<Account> account = accountRepository.findByEmail(email);
 
-        System.out.println(password);
-        if (account.isPresent())
-            return passwordEncoder.matches(password, account.get().getPassword());
+        if (account.isPresent() && passwordEncoder.matches(password, account.get().getPassword())) {
+            // Buscar el rol del usuario
+            AccountRole accountRole = accountRoleRepository.findByAccountId(account.get().getAccount_id().longValue());
+            Role role = roleRepository.findById(accountRole.getRoleId()).orElse(null);
+            String roleName = role != null ? role.getName() : "USER";
 
-        return false;
+            return jwtUtil.generateToken(email, roleName);
+        }
+
+        return null;
     }
 
 

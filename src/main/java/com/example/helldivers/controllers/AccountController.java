@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -57,15 +58,15 @@ public class AccountController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        boolean valid = accountService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        String token = accountService.login(loginRequest.getEmail(), loginRequest.getPassword());
 
-        if (valid)
-            return ResponseEntity.ok("Login successful");
+        if (token != null)
+            return ResponseEntity.ok(Map.of("token", token));
         else
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> createAccount(@RequestBody @Valid Account account){
 
         accountService.createOrModifyNewAccount(account);
