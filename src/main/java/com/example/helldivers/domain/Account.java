@@ -5,7 +5,6 @@ import com.example.helldivers.enums.PlatformType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
@@ -28,14 +27,14 @@ public class Account {
     private Timestamp created_at;
     private Timestamp last_login;
     @JsonProperty("password")
-    private String encryptedPassword;
+    private String password;
 
     public Account() {
     }
 
     public Account(Integer account_id, String platform_id, PlatformType platformType,
                    String email, String region, boolean is_banned, Timestamp created_at,
-                   Timestamp last_login, String encryptedPassword) {
+                   Timestamp last_login, String password) {
         this.account_id = account_id;
         this.platform_id = platform_id;
         this.platform_type = platformType;
@@ -44,7 +43,7 @@ public class Account {
         this.is_banned = is_banned;
         this.created_at = created_at;
         this.last_login = last_login;
-        this.encryptedPassword = encryptedPassword;
+        this.password = password;
     }
 
 
@@ -129,10 +128,10 @@ public class Account {
     }
 
     public String getPassword() {
-        return encryptedPassword;
+        return password;
     }
 
-    public void setPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
