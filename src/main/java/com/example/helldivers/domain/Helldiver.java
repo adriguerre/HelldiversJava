@@ -11,33 +11,43 @@ public class Helldiver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer helldiver_id;
+    @Column(name = "helldiver_id")
+    private Integer helldiverId;
     @OneToOne
     @JoinColumn(name = "account_id")
     @JsonProperty("account")
     private Account account;
     private String callsign;
     private Integer level;
-    private Integer xp_total;
-    private Integer kills_total;
-    private Integer deaths_total;
-    private Integer super_credits;
-    private Timestamp created_at;
+    @Column(name = "xp_total")
+    private Integer xpTotal;
+    @Column(name = "kills_total")
+    private Integer killsTotal;
+    @Column(name = "deaths_total")
+    private Integer deathsTotal;
+    @Column(name = "super_credits")
+    private Integer superCredits;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
     private Integer medals;
-    private Integer missions_completed;
-    private Integer samples_tier_1_collected;
-    private Integer samples_tier_2_collected;
-    private Integer samples_tier_3_collected;
+    @Column(name = "missions_completed")
+    private Integer missionsCompleted;
+    @Column(name = "samples_tier_1_collected")
+    private Integer samplesTier1Collected;
+    @Column(name = "samples_tier_2_collected")
+    private Integer samplesTier2Collected;
+    @Column(name = "samples_tier_3_collected")
+    private Integer samplesTier3Collected;
 
     public Helldiver() {
     }
 
-    public Integer getHelldiver_id() {
-        return helldiver_id;
+    public Integer getHelldiverId() {
+        return helldiverId;
     }
 
-    public void setHelldiver_id(Integer helldiver_id) {
-        this.helldiver_id = helldiver_id;
+    public void setHelldiverId(Integer helldiver_id) {
+        this.helldiverId = helldiver_id;
     }
 
     public Account getAccount() {
@@ -64,44 +74,44 @@ public class Helldiver {
         this.level = level;
     }
 
-    public Integer getXp_total() {
-        return xp_total;
+    public Integer getXpTotal() {
+        return xpTotal;
     }
 
-    public void setXp_total(Integer xp_total) {
-        this.xp_total = xp_total;
+    public void setXpTotal(Integer xp_total) {
+        this.xpTotal = xp_total;
     }
 
-    public Integer getKills_total() {
-        return kills_total;
+    public Integer getKillsTotal() {
+        return killsTotal;
     }
 
-    public void setKills_total(Integer kills_total) {
-        this.kills_total = kills_total;
+    public void setKillsTotal(Integer kills_total) {
+        this.killsTotal = kills_total;
     }
 
-    public Integer getDeaths_total() {
-        return deaths_total;
+    public Integer getDeathsTotal() {
+        return deathsTotal;
     }
 
-    public void setDeaths_total(Integer deaths_total) {
-        this.deaths_total = deaths_total;
+    public void setDeathsTotal(Integer deaths_total) {
+        this.deathsTotal = deaths_total;
     }
 
-    public Integer getSuper_credits() {
-        return super_credits;
+    public Integer getSuperCredits() {
+        return superCredits;
     }
 
-    public void setSuper_credits(Integer super_credits) {
-        this.super_credits = super_credits;
+    public void setSuperCredits(Integer super_credits) {
+        this.superCredits = super_credits;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp created_at) {
+        this.createdAt = created_at;
     }
 
     public Integer getMedals() {
@@ -112,35 +122,35 @@ public class Helldiver {
         this.medals = medals;
     }
 
-    public Integer getMissions_completed() {
-        return missions_completed;
+    public Integer getMissionsCompleted() {
+        return missionsCompleted;
     }
 
-    public void setMissions_completed(Integer missions_completed) {
-        this.missions_completed = missions_completed;
+    public void setMissionsCompleted(Integer missions_completed) {
+        this.missionsCompleted = missions_completed;
     }
 
-    public Integer getSamples_tier_1_collected() {
-        return samples_tier_1_collected;
+    public Integer getSamplesTier1Collected() {
+        return samplesTier1Collected;
     }
 
-    public void setSamples_tier_1_collected(Integer samples_tier_1_collected) {
-        this.samples_tier_1_collected = samples_tier_1_collected;
+    public void setSamplesTier1Collected(Integer samples_tier_1_collected) {
+        this.samplesTier1Collected = samples_tier_1_collected;
     }
 
-    public Integer getSamples_tier_2_collected() {
-        return samples_tier_2_collected;
+    public Integer getSamplesTier2Collected() {
+        return samplesTier2Collected;
     }
 
-    public void setSamples_tier_2_collected(Integer samples_tier_2_collected) {
-        this.samples_tier_2_collected = samples_tier_2_collected;
+    public void setSamplesTier2Collected(Integer samples_tier_2_collected) {
+        this.samplesTier2Collected = samples_tier_2_collected;
     }
 
-    public Integer getSamples_tier_3_collected() {
-        return samples_tier_3_collected;
+    public Integer getSamplesTier3Collected() {
+        return samplesTier3Collected;
     }
 
-    public void setSamples_tier_3_collected(Integer samples_tier_3_collected) {
-        this.samples_tier_3_collected = samples_tier_3_collected;
+    public void setSamplesTier3Collected(Integer samples_tier_3_collected) {
+        this.samplesTier3Collected = samples_tier_3_collected;
     }
 }

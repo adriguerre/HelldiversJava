@@ -10,72 +10,78 @@ public class Squad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer squad_id;
-    private String session_id;
-    private String lobby_code;
-    private Integer max_players;
-    private Timestamp created_at;
+    @Column(name = "squad_id")
+    private Integer squadId;
+    @Column(name = "session_id")
+    private String sessionId;
+    @Column(name = "lobby_code")
+    private String lobbyCode;
+    @Column(name = "max_players")
+    private Integer maxPlayers;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
     @Enumerated(EnumType.STRING)
-    private LobbyType lobby_type;
+    @Column(name = "lobby_type")
+    private LobbyType lobbyType;
 
     public Squad() {
     }
 
-    public Squad(Integer squad_id, String session_id, String lobby_code, Integer max_players,
-                 Timestamp created_at, LobbyType lobby_type) {
-        this.squad_id = squad_id;
-        this.session_id = session_id;
-        this.lobby_code = lobby_code;
-        this.max_players = max_players;
-        this.created_at = created_at;
-        this.lobby_type = lobby_type;
+    public Squad(Integer squadId, String sessionId, String lobbyCode, Integer maxPlayers,
+                 Timestamp createdAt, LobbyType lobbyType) {
+        this.squadId = squadId;
+        this.sessionId = sessionId;
+        this.lobbyCode = lobbyCode;
+        this.maxPlayers = maxPlayers;
+        this.createdAt = createdAt;
+        this.lobbyType = lobbyType;
     }
 
-    public Integer getSquad_id() {
-        return squad_id;
+    public Integer getSquadId() {
+        return squadId;
     }
 
-    public void setSquad_id(Integer squad_id) {
-        this.squad_id = squad_id;
+    public void setSquadId(Integer squad_id) {
+        this.squadId = squad_id;
     }
 
-    public String getSession_id() {
-        return session_id;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setSession_id(String session_id) {
-        this.session_id = session_id;
+    public void setSessionId(String session_id) {
+        this.sessionId = session_id;
     }
 
-    public String getLobby_code() {
-        return lobby_code;
+    public String getLobbyCode() {
+        return lobbyCode;
     }
 
-    public void setLobby_code(String lobby_code) {
-        this.lobby_code = lobby_code;
+    public void setLobbyCode(String lobby_code) {
+        this.lobbyCode = lobby_code;
     }
 
-    public Integer getMax_players() {
-        return max_players;
+    public Integer getMaxPlayers() {
+        return maxPlayers;
     }
 
-    public void setMax_players(Integer max_players) {
-        this.max_players = max_players;
+    public void setMaxPlayers(Integer max_players) {
+        this.maxPlayers = max_players;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp created_at) {
+        this.createdAt = created_at;
     }
 
-    public LobbyType getLobby_type() {
-        return lobby_type;
+    public LobbyType getLobbyType() {
+        return lobbyType;
     }
 
-    public void setLobby_type(LobbyType lobby_type) {
-        this.lobby_type = lobby_type;
+    public void setLobbyType(LobbyType lobby_type) {
+        this.lobbyType = lobby_type;
     }
 }

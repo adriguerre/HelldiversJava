@@ -9,55 +9,63 @@ public class MissionStats {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stat_id;
-    private Integer mission_id;
+    @Column(name = "stat_id")
+    private Integer statId;
+    @Column(name = "mission_id")
+    private Integer missionId;
     @ManyToOne
     @JoinColumn(name="helldiver_id")
     @JsonProperty("helldiver")
     private Helldiver helldiver;
     private Integer kills;
     private Integer deaths;
-    private Integer friendly_kills;
-    private Integer shots_fired;
-    private Double accuracy_pct;
-    private Integer stratagems_used;
-    private Double distance_travelled;
-    private Integer objectives_done;
+    @Column(name = "friendly_kills")
+    private Integer friendlyKills;
+    @Column(name = "shots_fired")
+    private Integer shotsFired;
+    @Column(name = "accuracy_pct")
+    private Double accuracyPct;
+    @Column(name = "stratagems_used")
+    private Integer stratagemsUsed;
+    @Column(name = "distance_travelled")
+    private Double distanceTravelled;
+    @Column(name = "objectives_done")
+    private Integer objectivesDone;
 
 
     public MissionStats() {
     }
 
-    public MissionStats(Integer stat_id, Integer mission_id, Helldiver helldiver, Integer kills, Integer deaths,
-                        Integer friendly_kills, Integer shots_fired, Double accuracy_pct, Integer stratagems_used,
-                        Double distance_travelled, Integer objectives_done) {
-        this.stat_id = stat_id;
-        this.mission_id = mission_id;
+    public MissionStats(Integer statId, Integer missionId, Helldiver helldiver, Integer kills, Integer deaths,
+                        Integer friendlyKills, Integer shotsFired, Double accuracyPct, Integer stratagemsUsed,
+                        Double distanceTravelled, Integer objectivesDone) {
+        this.statId = statId;
+        this.missionId = missionId;
         this.helldiver = helldiver;
         this.kills = kills;
         this.deaths = deaths;
-        this.friendly_kills = friendly_kills;
-        this.shots_fired = shots_fired;
-        this.accuracy_pct = accuracy_pct;
-        this.stratagems_used = stratagems_used;
-        this.distance_travelled = distance_travelled;
-        this.objectives_done = objectives_done;
+        this.friendlyKills = friendlyKills;
+        this.shotsFired = shotsFired;
+        this.accuracyPct = accuracyPct;
+        this.stratagemsUsed = stratagemsUsed;
+        this.distanceTravelled = distanceTravelled;
+        this.objectivesDone = objectivesDone;
     }
 
-    public Integer getStat_id() {
-        return stat_id;
+    public Integer getStatId() {
+        return statId;
     }
 
-    public void setStat_id(Integer stat_id) {
-        this.stat_id = stat_id;
+    public void setStatId(Integer stat_id) {
+        this.statId = stat_id;
     }
 
-    public Integer getMission_id() {
-        return mission_id;
+    public Integer getMissionId() {
+        return missionId;
     }
 
-    public void setMission_id(Integer mission_id) {
-        this.mission_id = mission_id;
+    public void setMissionId(Integer mission_id) {
+        this.missionId = mission_id;
     }
 
     public Helldiver getHelldiver() {
@@ -84,51 +92,51 @@ public class MissionStats {
         this.deaths = deaths;
     }
 
-    public Integer getFriendly_kills() {
-        return friendly_kills;
+    public Integer getFriendlyKills() {
+        return friendlyKills;
     }
 
-    public void setFriendly_kills(Integer friendly_kills) {
-        this.friendly_kills = friendly_kills;
+    public void setFriendlyKills(Integer friendly_kills) {
+        this.friendlyKills = friendly_kills;
     }
 
-    public Integer getShots_fired() {
-        return shots_fired;
+    public Integer getShotsFired() {
+        return shotsFired;
     }
 
-    public void setShots_fired(Integer shots_fired) {
-        this.shots_fired = shots_fired;
+    public void setShotsFired(Integer shots_fired) {
+        this.shotsFired = shots_fired;
     }
 
-    public Double getAccuracy_pct() {
-        return accuracy_pct;
+    public Double getAccuracyPct() {
+        return accuracyPct;
     }
 
-    public void setAccuracy_pct(Double accuracy_pct) {
-        this.accuracy_pct = accuracy_pct;
+    public void setAccuracyPct(Double accuracy_pct) {
+        this.accuracyPct = accuracy_pct;
     }
 
-    public Integer getStratagems_used() {
-        return stratagems_used;
+    public Integer getStratagemsUsed() {
+        return stratagemsUsed;
     }
 
-    public void setStratagems_used(Integer stratagems_used) {
-        this.stratagems_used = stratagems_used;
+    public void setStratagemsUsed(Integer stratagems_used) {
+        this.stratagemsUsed = stratagems_used;
     }
 
-    public Double getDistance_travelled() {
-        return distance_travelled;
+    public Double getDistanceTravelled() {
+        return distanceTravelled;
     }
 
-    public void setDistance_travelled(Double distance_travelled) {
-        this.distance_travelled = distance_travelled;
+    public void setDistanceTravelled(Double distance_travelled) {
+        this.distanceTravelled = distance_travelled;
     }
 
-    public Integer getObjectives_done() {
-        return objectives_done;
+    public Integer getObjectivesDone() {
+        return objectivesDone;
     }
 
-    public void setObjectives_done(Integer objectives_done) {
-        this.objectives_done = objectives_done;
+    public void setObjectivesDone(Integer objectives_done) {
+        this.objectivesDone = objectives_done;
     }
 }

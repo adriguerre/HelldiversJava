@@ -1,9 +1,6 @@
 package com.example.helldivers.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="passive_bonus")
@@ -11,28 +8,30 @@ public class PassiveBonus {
 
     @Id
     @GeneratedValue
-    private Integer passive_id;
+    @Column(name = "passive_id")
+    private Integer passiveId;
     private String name;
     private String description;
-    private String stat_modifier;
+    @Column(name = "stat_modifier")
+    private String statModifier;
 
 
     public PassiveBonus() {
     }
 
-    public PassiveBonus(Integer passive_id, String name, String description, String stat_modifier) {
-        this.passive_id = passive_id;
+    public PassiveBonus(Integer passiveId, String name, String description, String statModifier) {
+        this.passiveId = passiveId;
         this.name = name;
         this.description = description;
-        this.stat_modifier = stat_modifier;
+        this.statModifier = statModifier;
     }
 
-    public Integer getPassive_id() {
-        return passive_id;
+    public Integer getPassiveId() {
+        return passiveId;
     }
 
-    public void setPassive_id(Integer passive_id) {
-        this.passive_id = passive_id;
+    public void setPassiveId(Integer passive_id) {
+        this.passiveId = passive_id;
     }
 
     public String getName() {
@@ -51,11 +50,11 @@ public class PassiveBonus {
         this.description = description;
     }
 
-    public String getStat_modifier() {
-        return stat_modifier;
+    public String getStatModifier() {
+        return statModifier;
     }
 
-    public void setStat_modifier(String stat_modifier) {
-        this.stat_modifier = stat_modifier;
+    public void setStatModifier(String stat_modifier) {
+        this.statModifier = stat_modifier;
     }
 }

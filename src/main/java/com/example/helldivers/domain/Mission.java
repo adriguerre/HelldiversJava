@@ -13,56 +13,68 @@ public class Mission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer mission_id;
+    @Column(name = "mission_id")
+    private Integer missionId;
     @ManyToOne
     @JoinColumn(name="planet_id")
     @JsonProperty("planet")
     private Planet planet;
-    private Integer squad_id;
+    @Column(name = "squad_id")
+    private Integer squadId;
     @Enumerated(EnumType.STRING)
-    private MissionType mission_type;
+    @Column(name = "mission_type")
+    private MissionType missionType;
     private Integer difficulty;
     @Enumerated(EnumType.STRING)
-    private FactionType enemy_faction;
-    private Timestamp started_at;
-    private Timestamp ended_at;
+    @Column(name = "enemy_faction")
+    private FactionType enemyFaction;
+    @Column(name = "started_at")
+    private Timestamp startedAt;
+    @Column(name = "ended_at")
+    private Timestamp endedAt;
     @Enumerated(EnumType.STRING)
-    private ResultType mission_result;
-    private Integer samples_tier_1_found;
-    private Integer samples_tier_2_found;
-    private Integer samples_tier_3_found;
-    private Integer xp_earned;
-    private Integer medals_earned;
+    @Column(name = "mission_result")
+    private ResultType missionResult;
+    @Column(name = "samples_tier_1_found")
+    private Integer samplesTier1Found;
+    @Column(name = "samples_tier_2_found")
+    private Integer samplesTier2Found;
+    @Column(name = "samples_tier_3_found")
+    private Integer samplesTier3Found;
+    @Column(name = "xp_earned")
+    private Integer xpEarned;
+    @Column(name = "medals_earned")
+    private Integer medalsEarned;
 
 
     public Mission() {}
 
-    public Mission(Integer mission_id, Planet planet, Integer squad_id, MissionType mission_type,
-                   Integer difficulty, FactionType enemy_faction, Timestamp started_at, Timestamp ended_at,
-                   ResultType mission_result, Integer samples_tier_1_found, Integer samples_tier_2_found,
-                   Integer samples_tier_3_found, Integer xp_earned, Integer medals_earned) {
-        this.mission_id = mission_id;
+    public Mission(Integer missionId, Planet planet, Integer squadId, MissionType missionType,
+                   Integer difficulty, FactionType enemyFaction, Timestamp startedAt, Timestamp endedAt,
+                   ResultType missionResult, Integer samplesTier1Found, Integer samplesTier2Found,
+                   Integer samplesTier3Found, Integer xpEarned, Integer medalsEarned) {
+        this.missionId = missionId;
         this.planet= planet;
-        this.squad_id = squad_id;
-        this.mission_type = mission_type;
+        this.squadId = squadId;
+        this.missionType = missionType;
         this.difficulty = difficulty;
-        this.enemy_faction = enemy_faction;
-        this.started_at = started_at;
-        this.ended_at = ended_at;
-        this.mission_result = mission_result;
-        this.samples_tier_1_found = samples_tier_1_found;
-        this.samples_tier_2_found = samples_tier_2_found;
-        this.samples_tier_3_found = samples_tier_3_found;
-        this.xp_earned = xp_earned;
-        this.medals_earned = medals_earned;
+        this.enemyFaction = enemyFaction;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+        this.missionResult = missionResult;
+        this.samplesTier1Found = samplesTier1Found;
+        this.samplesTier2Found = samplesTier2Found;
+        this.samplesTier3Found = samplesTier3Found;
+        this.xpEarned = xpEarned;
+        this.medalsEarned = medalsEarned;
     }
 
-    public Integer getMission_id() {
-        return mission_id;
+    public Integer getMissionId() {
+        return missionId;
     }
 
-    public void setMission_id(Integer mission_id) {
-        this.mission_id = mission_id;
+    public void setMissionId(Integer mission_id) {
+        this.missionId = mission_id;
     }
 
     public Planet getPlanet() {
@@ -73,20 +85,20 @@ public class Mission {
         this.planet = planet;
     }
 
-    public Integer getSquad_id() {
-        return squad_id;
+    public Integer getSquadId() {
+        return squadId;
     }
 
-    public void setSquad_id(Integer squad_id) {
-        this.squad_id = squad_id;
+    public void setSquadId(Integer squad_id) {
+        this.squadId = squad_id;
     }
 
-    public MissionType getMission_type() {
-        return mission_type;
+    public MissionType getMissionType() {
+        return missionType;
     }
 
-    public void setMission_type(MissionType mission_type) {
-        this.mission_type = mission_type;
+    public void setMissionType(MissionType mission_type) {
+        this.missionType = mission_type;
     }
 
     public Integer getDifficulty() {
@@ -97,75 +109,75 @@ public class Mission {
         this.difficulty = difficulty;
     }
 
-    public FactionType getEnemy_faction() {
-        return enemy_faction;
+    public FactionType getEnemyFaction() {
+        return enemyFaction;
     }
 
-    public void setEnemy_faction(FactionType enemy_faction) {
-        this.enemy_faction = enemy_faction;
+    public void setEnemyFaction(FactionType enemy_faction) {
+        this.enemyFaction = enemy_faction;
     }
 
-    public Timestamp getStarted_at() {
-        return started_at;
+    public Timestamp getStartedAt() {
+        return startedAt;
     }
 
-    public void setStarted_at(Timestamp started_at) {
-        this.started_at = started_at;
+    public void setStartedAt(Timestamp started_at) {
+        this.startedAt = started_at;
     }
 
-    public Timestamp getEnded_at() {
-        return ended_at;
+    public Timestamp getEndedAt() {
+        return endedAt;
     }
 
-    public void setEnded_at(Timestamp ended_at) {
-        this.ended_at = ended_at;
+    public void setEndedAt(Timestamp ended_at) {
+        this.endedAt = ended_at;
     }
 
-    public ResultType getMission_result() {
-        return mission_result;
+    public ResultType getMissionResult() {
+        return missionResult;
     }
 
-    public void setMission_result(ResultType mission_result) {
-        this.mission_result = mission_result;
+    public void setMissionResult(ResultType mission_result) {
+        this.missionResult = mission_result;
     }
 
-    public Integer getSamples_tier_1_found() {
-        return samples_tier_1_found;
+    public Integer getSamplesTier1Found() {
+        return samplesTier1Found;
     }
 
-    public void setSamples_tier_1_found(Integer samples_tier_1_found) {
-        this.samples_tier_1_found = samples_tier_1_found;
+    public void setSamplesTier1Found(Integer samples_tier_1_found) {
+        this.samplesTier1Found = samples_tier_1_found;
     }
 
-    public Integer getSamples_tier_2_found() {
-        return samples_tier_2_found;
+    public Integer getSamplesTier2Found() {
+        return samplesTier2Found;
     }
 
-    public void setSamples_tier_2_found(Integer samples_tier_2_found) {
-        this.samples_tier_2_found = samples_tier_2_found;
+    public void setSamplesTier2Found(Integer samples_tier_2_found) {
+        this.samplesTier2Found = samples_tier_2_found;
     }
 
-    public Integer getSamples_tier_3_found() {
-        return samples_tier_3_found;
+    public Integer getSamplesTier3Found() {
+        return samplesTier3Found;
     }
 
-    public void setSamples_tier_3_found(Integer samples_tier_3_found) {
-        this.samples_tier_3_found = samples_tier_3_found;
+    public void setSamplesTier3Found(Integer samples_tier_3_found) {
+        this.samplesTier3Found = samples_tier_3_found;
     }
 
-    public Integer getXp_earned() {
-        return xp_earned;
+    public Integer getXpEarned() {
+        return xpEarned;
     }
 
-    public void setXp_earned(Integer xp_earned) {
-        this.xp_earned = xp_earned;
+    public void setXpEarned(Integer xp_earned) {
+        this.xpEarned = xp_earned;
     }
 
-    public Integer getMedals_earned() {
-        return medals_earned;
+    public Integer getMedalsEarned() {
+        return medalsEarned;
     }
 
-    public void setMedals_earned(Integer medals_earned) {
-        this.medals_earned = medals_earned;
+    public void setMedalsEarned(Integer medals_earned) {
+        this.medalsEarned = medals_earned;
     }
 }

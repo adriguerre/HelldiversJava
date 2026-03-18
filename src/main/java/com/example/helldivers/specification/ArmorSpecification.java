@@ -15,13 +15,13 @@ public class ArmorSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(armor_slot != null)
-                predicates.add(cb.equal(root.get("armor_slot"), armor_slot));
+                predicates.add(cb.equal(root.get("armorSlot"), armor_slot));
 
             if(passive_id != null)
-                predicates.add(cb.equal(root.get("passive_id"), passive_id));
+                predicates.add(cb.equal(root.get("passive").get("passiveId"), passive_id));
 
             if (purchaseableArmor != null) {
-                var field = root.get("super_credits_cost");
+                var field = root.get("superCreditsCost");
                 predicates.add(purchaseableArmor
                         ? cb.isNotNull(field)
                         : cb.isNull(field));

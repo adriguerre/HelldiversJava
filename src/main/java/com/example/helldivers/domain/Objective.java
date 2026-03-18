@@ -10,38 +10,42 @@ public class Objective {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer objective_id;
+    @Column(name = "objective_id")
+    private Integer objectiveId;
     private String name;
     @Enumerated(EnumType.STRING)
     @Column(name = "objective_type")
-    private ObjectiveType objective_type;
+    private ObjectiveType objectiveType;
     private String description;
-    private Boolean is_primary;
-    private Integer mission_id;
+    @Column(name = "is_primary")
+    private Boolean isPrimary;
+    @Column(name = "mission_id")
+    private Integer missionId;
     private Boolean completed;
-    private Timestamp completed_at;
+    @Column(name = "completed_at")
+    private Timestamp completedAt;
 
     public Objective() {
     }
 
-    public Objective(Integer objective_id, String name, ObjectiveType objective_type, String description,
-                     Boolean is_primary, Integer mission_id, Boolean completed, Timestamp completed_at) {
-        this.objective_id = objective_id;
+    public Objective(Integer objectiveId, String name, ObjectiveType objectiveType, String description,
+                     Boolean isPrimary, Integer missionId, Boolean completed, Timestamp completedAt) {
+        this.objectiveId = objectiveId;
         this.name = name;
-        this.objective_type = objective_type;
+        this.objectiveType = objectiveType;
         this.description = description;
-        this.is_primary = is_primary;
-        this.mission_id = mission_id;
+        this.isPrimary = isPrimary;
+        this.missionId = missionId;
         this.completed = completed;
-        this.completed_at = completed_at;
+        this.completedAt = completedAt;
     }
 
-    public Integer getObjective_id() {
-        return objective_id;
+    public Integer getObjectiveId() {
+        return objectiveId;
     }
 
-    public void setObjective_id(Integer objective_id) {
-        this.objective_id = objective_id;
+    public void setObjectiveId(Integer objective_id) {
+        this.objectiveId = objective_id;
     }
 
     public String getName() {
@@ -52,12 +56,12 @@ public class Objective {
         this.name = name;
     }
 
-    public ObjectiveType getObjective_type() {
-        return objective_type;
+    public ObjectiveType getObjectiveType() {
+        return objectiveType;
     }
 
-    public void setObjective_type(ObjectiveType objective_type) {
-        this.objective_type = objective_type;
+    public void setObjectiveType(ObjectiveType objective_type) {
+        this.objectiveType = objective_type;
     }
 
     public String getDescription() {
@@ -68,20 +72,20 @@ public class Objective {
         this.description = description;
     }
 
-    public Boolean getIs_primary() {
-        return is_primary;
+    public Boolean getIsPrimary() {
+        return isPrimary;
     }
 
-    public void setIs_primary(Boolean is_primary) {
-        this.is_primary = is_primary;
+    public void setIsPrimary(Boolean is_primary) {
+        this.isPrimary = is_primary;
     }
 
-    public Integer getMission_id() {
-        return mission_id;
+    public Integer getMissionId() {
+        return missionId;
     }
 
-    public void setMission_id(Integer mission_id) {
-        this.mission_id = mission_id;
+    public void setMissionId(Integer mission_id) {
+        this.missionId = mission_id;
     }
 
     public Boolean getCompleted() {
@@ -92,11 +96,11 @@ public class Objective {
         this.completed = completed;
     }
 
-    public Timestamp getCompleted_at() {
-        return completed_at;
+    public Timestamp getCompletedAt() {
+        return completedAt;
     }
 
-    public void setCompleted_at(Timestamp completed_at) {
-        this.completed_at = completed_at;
+    public void setCompletedAt(Timestamp completed_at) {
+        this.completedAt = completed_at;
     }
 }

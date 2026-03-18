@@ -10,48 +10,57 @@ public class Planet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer planet_id;
+    @Column(name = "planet_id")
+    private Integer planetId;
     private String name;
     private String sector;
-    private Double liberation_rate;
-    private Double coordinates_x;
-    private Double coordinates_y;
-    private Double max_health;
-    private Double current_health;
-    private Double regen_per_hour;
+    @Column(name = "liberation_rate")
+    private Double liberationRate;
+    @Column(name = "coordinates_x")
+    private Double coordinatesX;
+    @Column(name = "coordinates_y")
+    private Double coordinatesY;
+    @Column(name = "max_health")
+    private Double maxHealth;
+    @Column(name = "current_health")
+    private Double currentHealth;
+    @Column(name = "regen_per_hour")
+    private Double regenPerHour;
     @Enumerated(EnumType.STRING)
     private BiomeType biome;
     @Enumerated(EnumType.STRING)
-    private FactionType owner_faction;
-    private String hazard_types;
+    @Column(name = "owner_faction")
+    private FactionType ownerFaction;
+    @Column(name = "hazard_types")
+    private String hazardTypes;
 
     public Planet() {
     }
 
-    public Planet(Integer planet_id, String name, String sector, Double liberation_rate,
-                  Double coordinates_x, Double coordinates_y, Double max_health, Double current_health,
-                  Double regen_per_hour, BiomeType biome, FactionType owner_faction, String hazard_types) {
+    public Planet(Integer planetId, String name, String sector, Double liberationRate,
+                  Double coordinatesX, Double coordinatesY, Double maxHealth, Double currentHealth,
+                  Double regenPerHour, BiomeType biome, FactionType ownerFaction, String hazardTypes) {
 
-        this.planet_id = planet_id;
+        this.planetId = planetId;
         this.name = name;
         this.sector = sector;
-        this.liberation_rate = liberation_rate;
-        this.coordinates_x = coordinates_x;
-        this.coordinates_y = coordinates_y;
-        this.max_health = max_health;
-        this.current_health = current_health;
-        this.regen_per_hour = regen_per_hour;
+        this.liberationRate = liberationRate;
+        this.coordinatesX = coordinatesX;
+        this.coordinatesY = coordinatesY;
+        this.maxHealth = maxHealth;
+        this.currentHealth = currentHealth;
+        this.regenPerHour = regenPerHour;
         this.biome = biome;
-        this.owner_faction = owner_faction;
-        this.hazard_types = hazard_types;
+        this.ownerFaction = ownerFaction;
+        this.hazardTypes = hazardTypes;
     }
 
-    public Integer getPlanet_id() {
-        return planet_id;
+    public Integer getPlanetId() {
+        return planetId;
     }
 
-    public void setPlanet_id(Integer planet_id) {
-        this.planet_id = planet_id;
+    public void setPlanetId(Integer planet_id) {
+        this.planetId = planet_id;
     }
 
     public String getName() {
@@ -70,52 +79,52 @@ public class Planet {
         this.sector = sector;
     }
 
-    public Double getLiberation_rate() {
-        return liberation_rate;
+    public Double getLiberationRate() {
+        return liberationRate;
     }
 
-    public void setLiberation_rate(Double liberation_rate) {
-        this.liberation_rate = liberation_rate;
+    public void setLiberationRate(Double liberation_rate) {
+        this.liberationRate = liberation_rate;
     }
 
-    public Double getCoordinates_x() {
-        return coordinates_x;
+    public Double getCoordinatesX() {
+        return coordinatesX;
     }
 
-    public void setCoordinates_x(Double coordinates_x) {
-        this.coordinates_x = coordinates_x;
+    public void setCoordinatesX(Double coordinates_x) {
+        this.coordinatesX = coordinates_x;
     }
 
-    public Double getCoordinates_y() {
-        return coordinates_y;
+    public Double getCoordinatesY() {
+        return coordinatesY;
     }
 
-    public void setCoordinates_y(Double coordinates_y) {
-        this.coordinates_y = coordinates_y;
+    public void setCoordinatesY(Double coordinates_y) {
+        this.coordinatesY = coordinates_y;
     }
 
-    public Double getMax_health() {
-        return max_health;
+    public Double getMaxHealth() {
+        return maxHealth;
     }
 
-    public void setMax_health(Double max_health) {
-        this.max_health = max_health;
+    public void setMaxHealth(Double max_health) {
+        this.maxHealth = max_health;
     }
 
-    public Double getCurrent_health() {
-        return current_health;
+    public Double getCurrentHealth() {
+        return currentHealth;
     }
 
-    public void setCurrent_health(Double current_health) {
-        this.current_health = current_health;
+    public void setCurrentHealth(Double current_health) {
+        this.currentHealth = current_health;
     }
 
-    public Double getRegen_per_hour() {
-        return regen_per_hour;
+    public Double getRegenPerHour() {
+        return regenPerHour;
     }
 
-    public void setRegen_per_hour(Double regen_per_hour) {
-        this.regen_per_hour = regen_per_hour;
+    public void setRegenPerHour(Double regen_per_hour) {
+        this.regenPerHour = regen_per_hour;
     }
 
     public BiomeType getBiome() {
@@ -126,19 +135,19 @@ public class Planet {
         this.biome = biome;
     }
 
-    public FactionType getOwner_faction() {
-        return owner_faction;
+    public FactionType getOwnerFaction() {
+        return ownerFaction;
     }
 
-    public void setOwner_faction(FactionType owner_faction) {
-        this.owner_faction = owner_faction;
+    public void setOwnerFaction(FactionType owner_faction) {
+        this.ownerFaction = owner_faction;
     }
 
-    public String getHazard_types() {
-        return hazard_types;
+    public String getHazardTypes() {
+        return hazardTypes;
     }
 
-    public void setHazard_types(String hazard_types) {
-        this.hazard_types = hazard_types;
+    public void setHazardTypes(String hazard_types) {
+        this.hazardTypes = hazard_types;
     }
 }

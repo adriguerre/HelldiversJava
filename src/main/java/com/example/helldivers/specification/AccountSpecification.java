@@ -18,10 +18,10 @@ public class AccountSpecification {
                 predicates.add(cb.equal(root.get("region"), region));
 
             if (platformType != null)
-                predicates.add(cb.equal(root.get("platform_type"), platformType));
+                predicates.add(cb.equal(root.get("platformType"), platformType));
 
             if (isBanned != null)
-                predicates.add(cb.equal(root.get("is_banned"), isBanned));
+                predicates.add(cb.equal(root.get("isBanned"), isBanned));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         });

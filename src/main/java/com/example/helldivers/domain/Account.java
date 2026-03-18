@@ -14,35 +14,42 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer account_id;
-    private String platform_id;
+    @Column(name = "platform_id")
+    private String platformId;
     @Enumerated(EnumType.STRING)
     @JsonProperty("platform_type")
-    private PlatformType platform_type;
+    @Column(name = "platform_type")
+    private PlatformType platformType;
     private String psn_steam_id;
     @NotBlank(message = "Email is required")
     private String email;
     private String region;
-    private boolean is_banned;
-    private String ban_reason;
-    private Timestamp created_at;
-    private Timestamp last_login;
+    @Column(name = "is_banned")
+    private boolean isBanned;
+    @Column(name = "ban_reason")
+    private String banReason;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+    @Column(name = "last_login")
+    private Timestamp lastLogin;
     @JsonProperty("password")
+    @Column(name = "password")
     private String password;
 
     public Account() {
     }
 
-    public Account(Integer account_id, String platform_id, PlatformType platformType,
-                   String email, String region, boolean is_banned, Timestamp created_at,
-                   Timestamp last_login, String password) {
+    public Account(Integer account_id, String platformId, PlatformType platformType,
+                   String email, String region, boolean isBanned, Timestamp createdAt,
+                   Timestamp lastLogin, String password) {
         this.account_id = account_id;
-        this.platform_id = platform_id;
-        this.platform_type = platformType;
+        this.platformId = platformId;
+        this.platformType = platformType;
         this.email = email;
         this.region = region;
-        this.is_banned = is_banned;
-        this.created_at = created_at;
-        this.last_login = last_login;
+        this.isBanned = isBanned;
+        this.createdAt = createdAt;
+        this.lastLogin = lastLogin;
         this.password = password;
     }
 
@@ -55,20 +62,20 @@ public class Account {
         this.account_id = account_id;
     }
 
-    public String getPlatform_id() {
-        return platform_id;
+    public String getPlatformId() {
+        return platformId;
     }
 
-    public void setPlatform_id(String platform_id) {
-        this.platform_id = platform_id;
+    public void setPlatformId(String platform_id) {
+        this.platformId = platform_id;
     }
 
-    public PlatformType getPlatform_type() {
-        return platform_type;
+    public PlatformType getPlatformType() {
+        return platformType;
     }
 
-    public void setPlatform_type(PlatformType platformType) {
-        this.platform_type = platformType;
+    public void setPlatformType(PlatformType platformType) {
+        this.platformType = platformType;
     }
 
     public String getPsn_steam_id() {
@@ -95,36 +102,36 @@ public class Account {
         this.region = region;
     }
 
-    public boolean isIs_banned() {
-        return is_banned;
+    public boolean isIsBanned() {
+        return isBanned;
     }
 
-    public void setIs_banned(boolean is_banned) {
-        this.is_banned = is_banned;
+    public void setIsBanned(boolean is_banned) {
+        this.isBanned = is_banned;
     }
 
-    public String getBan_reason() {
-        return ban_reason;
+    public String getBanReason() {
+        return banReason;
     }
 
-    public void setBan_reason(String ban_reason) {
-        this.ban_reason = ban_reason;
+    public void setBanReason(String ban_reason) {
+        this.banReason = ban_reason;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Timestamp created_at) {
+        this.createdAt = created_at;
     }
 
-    public Timestamp getLast_login() {
-        return last_login;
+    public Timestamp getLastLogin() {
+        return lastLogin;
     }
 
-    public void setLast_login(Timestamp last_login) {
-        this.last_login = last_login;
+    public void setLastLogin(Timestamp last_login) {
+        this.lastLogin = last_login;
     }
 
     public String getPassword() {

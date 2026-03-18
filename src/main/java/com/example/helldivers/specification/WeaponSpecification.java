@@ -15,7 +15,7 @@ public class WeaponSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(weapon_type != null)
-                predicates.add(cb.equal(root.get("weapon_type"), weapon_type));
+                predicates.add(cb.equal(root.get("weaponType"), weapon_type));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         });

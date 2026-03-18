@@ -10,71 +10,77 @@ public class SquadMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer squad_member;
-    private Integer squad_id;
-    private Integer helldivers_id;
-    private boolean is_host;
-    private Timestamp joined_at;
-    private Integer slot_number;
+    @Column(name = "squad_member")
+    private Integer squadMember;
+    @Column(name = "squad_id")
+    private Integer squadId;
+    @Column(name = "helldivers_id")
+    private Integer helldiversId;
+    @Column(name = "is_host")
+    private boolean isHost;
+    @Column(name = "joined_at")
+    private Timestamp joinedAt;
+    @Column(name = "slot_number")
+    private Integer slotNumber;
 
     public SquadMember() {
     }
 
-    public SquadMember(Integer squad_member, Integer squad_id, Integer helldivers_id,
-                       boolean is_host, Timestamp joined_at, Integer slot_number) {
-        this.squad_member = squad_member;
-        this.squad_id = squad_id;
-        this.helldivers_id = helldivers_id;
-        this.is_host = is_host;
-        this.joined_at = joined_at;
-        this.slot_number = slot_number;
+    public SquadMember(Integer squadMember, Integer squadId, Integer helldiversId,
+                       boolean isHost, Timestamp joinedAt, Integer slotNumber) {
+        this.squadMember = squadMember;
+        this.squadId = squadId;
+        this.helldiversId = helldiversId;
+        this.isHost = isHost;
+        this.joinedAt = joinedAt;
+        this.slotNumber = slotNumber;
     }
 
-    public Integer getSquad_member() {
-        return squad_member;
+    public Integer getSquadMember() {
+        return squadMember;
     }
 
-    public void setSquad_member(Integer squad_member) {
-        this.squad_member = squad_member;
+    public void setSquadMember(Integer squad_member) {
+        this.squadMember = squad_member;
     }
 
-    public Integer getSquad_id() {
-        return squad_id;
+    public Integer getSquadId() {
+        return squadId;
     }
 
-    public void setSquad_id(Integer squad_id) {
-        this.squad_id = squad_id;
+    public void setSquadId(Integer squad_id) {
+        this.squadId = squad_id;
     }
 
-    public Integer getHelldivers_id() {
-        return helldivers_id;
+    public Integer getHelldiversId() {
+        return helldiversId;
     }
 
-    public void setHelldivers_id(Integer helldivers_id) {
-        this.helldivers_id = helldivers_id;
+    public void setHelldiversId(Integer helldivers_id) {
+        this.helldiversId = helldivers_id;
     }
 
-    public boolean isIs_host() {
-        return is_host;
+    public boolean isIsHost() {
+        return isHost;
     }
 
-    public void setIs_host(boolean is_host) {
-        this.is_host = is_host;
+    public void setIsHost(boolean is_host) {
+        this.isHost = is_host;
     }
 
-    public Timestamp getJoined_at() {
-        return joined_at;
+    public Timestamp getJoinedAt() {
+        return joinedAt;
     }
 
-    public void setJoined_at(Timestamp joined_at) {
-        this.joined_at = joined_at;
+    public void setJoinedAt(Timestamp joined_at) {
+        this.joinedAt = joined_at;
     }
 
-    public Integer getSlot_number() {
-        return slot_number;
+    public Integer getSlotNumber() {
+        return slotNumber;
     }
 
-    public void setSlot_number(Integer slot_number) {
-        this.slot_number = slot_number;
+    public void setSlotNumber(Integer slot_number) {
+        this.slotNumber = slot_number;
     }
 }

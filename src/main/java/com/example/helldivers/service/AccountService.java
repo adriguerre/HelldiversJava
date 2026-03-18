@@ -55,7 +55,7 @@ public class AccountService {
         Account saved = accountRepository.save(account);
 
         Role userRole = roleRepository.findByName("USER");
-        AccountRole accountRole = new AccountRole(saved.getAccount_id().longValue(), userRole.getRole_id());
+        AccountRole accountRole = new AccountRole(saved.getAccount_id().longValue(), userRole.getRoleId());
         accountRoleRepository.save(accountRole);
 
         return saved;
