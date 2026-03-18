@@ -1,5 +1,5 @@
 package com.example.helldivers.enums;
 
 public enum StratagemType {
-    EAGLE, ORBITAL, SUPPORT, DEFENSIVE
+    AIRSTRIKE, ORBITAL, SUPPORT, SHIELD, SUPPLY, EMPLACEMENT, VEHICLE, SENTRY, BACKPACK
 }

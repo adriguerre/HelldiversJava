@@ -3,6 +3,8 @@ package com.example.helldivers.domain;
 import com.example.helldivers.enums.StratagemType;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Stratagem {
 
@@ -30,6 +32,24 @@ public class Stratagem {
     private Integer unlockLevel;
     @Column(name="backpack_slot")
     private Boolean backpackSlot;
+
+    // 1:1 — stratagem_entity
+    //mappedBy must be the variable name in StratagemEntity, not db column name
+    @OneToOne(mappedBy = "stratagem", cascade = CascadeType.ALL)
+    private StratagemEntity entity;
+
+    // 1:N — stratagem_attack
+    @OneToMany(mappedBy = "stratagem", cascade = CascadeType.ALL)
+    private List<StratagemAttack> attacks;
+
+    // N:M — ship_upgrades from stratagem_ship_module
+    @ManyToMany
+    @JoinTable(
+            name = "stratagem_ship_module",
+            joinColumns = @JoinColumn(name = "stratagem_id"),
+            inverseJoinColumns = @JoinColumn(name = "upgrade_id")
+    )
+    private List<ShipUpgrade> shipModules;
 
     public Stratagem() {}
 
@@ -75,4 +95,28 @@ public class Stratagem {
     public void setUnlockLevel(Integer unlockLevel) { this.unlockLevel = unlockLevel; }
     public Boolean getBackpackSlot() { return backpackSlot; }
     public void setBackpackSlot(Boolean backpack_slot) { this.backpackSlot = backpackSlot; }
+
+    public StratagemEntity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(StratagemEntity entity) {
+        this.entity = entity;
+    }
+
+    public List<StratagemAttack> getAttacks() {
+        return attacks;
+    }
+
+    public void setAttacks(List<StratagemAttack> attacks) {
+        this.attacks = attacks;
+    }
+
+    public List<ShipUpgrade> getShipModules() {
+        return shipModules;
+    }
+
+    public void setShipModules(List<ShipUpgrade> shipModules) {
+        this.shipModules = shipModules;
+    }
 }
