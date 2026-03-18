@@ -15,7 +15,7 @@ public class Armor {
     private ArmorSlot armor_slot;
     private Integer armor_rating;
     private Integer speed;
-    private Integer staming_regen;
+    private Integer stamina_regen;
     @ManyToOne
     @JoinColumn(name = "passive_id")
     @JsonProperty("passive")
@@ -28,13 +28,13 @@ public class Armor {
     }
 
     public Armor(Integer armor_id, String name, ArmorSlot armor_slot, Integer armor_rating, Integer speed,
-                 Integer staming_regen, PassiveBonus passive, Integer req_cost, Integer super_credits_cost) {
+                 Integer stamina_regen, PassiveBonus passive, Integer req_cost, Integer super_credits_cost) {
         this.armor_id = armor_id;
         this.name = name;
         this.armor_slot = armor_slot;
         this.armor_rating = armor_rating;
         this.speed = speed;
-        this.staming_regen = staming_regen;
+        this.stamina_regen = stamina_regen;
         this.passive = passive;
         this.req_cost = req_cost;
         this.super_credits_cost = super_credits_cost;
@@ -80,12 +80,12 @@ public class Armor {
         this.speed = speed;
     }
 
-    public Integer getStaming_regen() {
-        return staming_regen;
+    public Integer getStamina_regen() {
+        return stamina_regen;
     }
 
-    public void setStaming_regen(Integer staming_regen) {
-        this.staming_regen = staming_regen;
+    public void setStamina_regen(Integer stamina_regen) {
+        this.stamina_regen = stamina_regen;
     }
 
     public PassiveBonus getPassive_id() {

@@ -20,8 +20,8 @@ public class ArmorService {
         this.armorRepository = armorRepository;
     }
 
-    public List<Armor> getAllArmors(ArmorSlot armorSlot, Integer passive_id){
-        return armorRepository.findAll(ArmorSpecification.withFilters(armorSlot, passive_id));
+    public List<Armor> getAllArmors(ArmorSlot armorSlot, Integer passive_id, Boolean purchaseableArmor){
+        return armorRepository.findAll(ArmorSpecification.withFilters(armorSlot, passive_id, purchaseableArmor));
     }
 
 
