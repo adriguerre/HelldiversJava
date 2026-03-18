@@ -36,12 +36,10 @@ public class WeaponController {
         if (weapon_type != null) {
             try {
                 type = WeaponType.valueOf(weapon_type.toUpperCase());
-
             } catch (IllegalArgumentException e) {
-                weapons = weaponService.getAllWeapons(null);
+                type = null;
             }
         }
-
         weapons = weaponService.getAllWeapons(type);
         if(weapons.isEmpty())
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

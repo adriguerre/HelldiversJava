@@ -35,7 +35,7 @@ public class ArmorController {
             try{
                 armor = ArmorSlot.valueOf(armor_slot.toUpperCase());
             }catch(IllegalArgumentException e){
-                armorList = armorService.getAllArmors(null, passive_id, shop);
+                armor = null;
             }
         }
         armorList = armorService.getAllArmors(armor, passive_id, shop);
