@@ -30,7 +30,7 @@ On first startup the database is automatically initialized with the following te
  
 ```bash
 git clone https://github.com/adriguerre/HelldiversJava.git
-cd helldivers
+cd .\HelldiversJava\
 ```
  
 ### 2. Run the project
