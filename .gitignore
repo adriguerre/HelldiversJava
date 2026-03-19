@@ -33,7 +33,10 @@ build/
 .vscode/
 
 
-### Properties ### 
+### Properties ###
 env.properties
 .env
+
+### SQL ###
 *.sql
+!docker/init/*.sql
