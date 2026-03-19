@@ -136,7 +136,9 @@ Authorization: Bearer <token>
 
 > All query parameters can be combined in a single request to apply multiple filters at once (e.g. `/armor?armor_slot=body&shop=true`).
 Base URL: `http://localhost:8080/helldivers/api/v1`
- 
+
+> ⚠️ **Note:** The API calls documented in this README reflect the current state of the **`main`** branch. New and modified endpoints are being developed in the **`develop`** branch and will be merged upon release.             
+
 ### Accounts
 | Method | Endpoint | Description |
 |--------|----------|-------------|
