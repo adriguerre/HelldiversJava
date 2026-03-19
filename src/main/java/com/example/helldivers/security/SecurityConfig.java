@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/weapons/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/armor/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/stratagems/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/missions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/missions/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

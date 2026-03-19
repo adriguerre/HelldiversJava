@@ -723,3 +723,30 @@ ALTER TABLE ONLY public.stratagem_changelog ADD CONSTRAINT fk_schange_stratagem 
 ALTER TABLE ONLY public.stratagem_entity ADD CONSTRAINT fk_sentity_stratagem FOREIGN KEY (stratagem_id) REFERENCES public.stratagem(stratagem_id);
 ALTER TABLE ONLY public.stratagem_ship_module ADD CONSTRAINT fk_ssm_stratagem FOREIGN KEY (stratagem_id) REFERENCES public.stratagem(stratagem_id);
 ALTER TABLE ONLY public.stratagem_ship_module ADD CONSTRAINT fk_ssm_upgrade FOREIGN KEY (upgrade_id) REFERENCES public.ship_upgrade(upgrade_id);
+CREATE TABLE public.super_credit_pickup (
+    pickup_id integer NOT NULL,
+    mission_id integer NOT NULL,
+    amount integer NOT NULL,
+    collected boolean NOT NULL DEFAULT false,
+    collected_by_helldiver_id integer,
+    collected_at timestamp with time zone
+);
+ALTER TABLE public.super_credit_pickup ALTER COLUMN pickup_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.super_credit_pickup_pickup_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
+);
+ALTER TABLE ONLY public.super_credit_pickup ADD CONSTRAINT super_credit_pickup_pkey PRIMARY KEY (pickup_id);
+ALTER TABLE ONLY public.super_credit_pickup ADD CONSTRAINT super_credit_pickup_mission_id_fkey FOREIGN KEY (mission_id) REFERENCES public.mission(mission_id);
+ALTER TABLE ONLY public.super_credit_pickup ADD CONSTRAINT super_credit_pickup_helldiver_id_fkey FOREIGN KEY (collected_by_helldiver_id) REFERENCES public.helldiver(helldiver_id) NOT VALID;
+COPY public.super_credit_pickup (pickup_id, mission_id, amount, collected, collected_by_helldiver_id, collected_at) FROM stdin;
+1	1	10	f	\N	\N
+2	1	100	f	\N	\N
+3	1	10	f	\N	\N
+4	2	10	f	\N	\N
+5	2	100	f	\N	\N
+6	3	10	f	\N	\N
+7	3	10	f	\N	\N
+8	4	100	f	\N	\N
+9	5	10	f	\N	\N
+10	5	10	f	\N	\N
+\.
+SELECT pg_catalog.setval('public.super_credit_pickup_pickup_id_seq', 10, true);
