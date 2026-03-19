@@ -29,7 +29,7 @@ On first startup the database is automatically initialized with the following te
 ### 1. Clone the repository
  
 ```bash
-git clone https://github.com/adriguerre/helldivers.git
+git clone https://github.com/adriguerre/HelldiversJava.git
 cd helldivers
 ```
  
