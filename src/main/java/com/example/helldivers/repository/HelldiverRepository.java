@@ -2,14 +2,15 @@ package com.example.helldivers.repository;
 
 import com.example.helldivers.domain.Helldiver;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface HelldiverRepository extends JpaRepository<Helldiver, Integer> {
+public interface HelldiverRepository extends JpaRepository<Helldiver, Integer>, JpaSpecificationExecutor<Helldiver> {
 
-    //void deleteById(Long helldiver_id);
-    //Optional<Player> findByUsername(String username);
-    //Optional<Player> findById(Long id);
+    void deleteByHelldiverId(Long helldiverId);
+    Optional<Helldiver> findByCallSign(String callSign);
+    Optional<Helldiver> findByHelldiverId(Long helldiverId);
 }

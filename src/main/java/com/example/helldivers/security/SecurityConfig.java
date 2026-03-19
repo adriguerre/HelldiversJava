@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/accounts/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/planets").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/helldivers").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/helldivers/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/accounts/register").permitAll()
                         //.requestMatchers(HttpMethod.GET, "/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/accounts/**").permitAll()

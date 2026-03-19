@@ -17,7 +17,8 @@ public class Helldiver {
     @JoinColumn(name = "account_id")
     @JsonProperty("account")
     private Account account;
-    private String callsign;
+    @Column(name = "callsign")
+    private String callSign;
     private Integer level;
     @Column(name = "xp_total")
     private Integer xpTotal;
@@ -38,6 +39,8 @@ public class Helldiver {
     private Integer samplesTier2Collected;
     @Column(name = "samples_tier_3_collected")
     private Integer samplesTier3Collected;
+    @Column( name ="requisition_slips")
+    private Integer requisitionSlips;
 
     public Helldiver() {
     }
@@ -58,12 +61,12 @@ public class Helldiver {
         this.account = account;
     }
 
-    public String getCallsign() {
-        return callsign;
+    public String getCallSign() {
+        return callSign;
     }
 
-    public void setCallsign(String callsign) {
-        this.callsign = callsign;
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
     }
 
     public Integer getLevel() {
@@ -153,4 +156,8 @@ public class Helldiver {
     public void setSamplesTier3Collected(Integer samples_tier_3_collected) {
         this.samplesTier3Collected = samples_tier_3_collected;
     }
+
+    public Integer getRequisitionSlips() {return requisitionSlips;}
+
+    public void setRequisitionSlips(Integer requisitionSlips) {this.requisitionSlips = requisitionSlips;}
 }
