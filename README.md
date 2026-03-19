@@ -1,8 +1,7 @@
 
 # Helldivers API 
 
-This repository contains a simulated PostgreSQL database designed to replicate the kind of backend data structure a game like Helldivers 2 might use. It includes entities such as players, accounts, and helldivers, 
-modeling relationships and data typical of a live-service multiplayer game. Built with Spring Boot and Java, this project serves as a learning and experimentation environment for backend development and database design in a gaming context.
+Simulated PostgreSQL database and REST API built with Spring Boot, modelling the backend of a multiplayer game like Helldivers 2 — players, accounts, helldivers, missions, stratagems and more. Built as a learning project for backend development and database design.
 
 > 🚧 **Work in progress**: This project is currently under active development. Endpoints, data models and features may change at any time. New functionality will be added progressively.
 
@@ -24,7 +23,16 @@ On first startup the database is automatically initialized with the following te
 - Ship upgrades, loadouts, squads and more
  
 ---
-
+ 
+## Getting Started
+ 
+### 1. Clone the repository
+ 
+```bash
+git clone https://github.com/adriguerre/helldivers.git
+cd helldivers
+```
+ 
 ### 2. Run the project
  
 ```bash
