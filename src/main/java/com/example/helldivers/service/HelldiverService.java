@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static java.util.Arrays.stream;
+import com.example.helldivers.utils.UpdateUtils;
 
 @Component
 @Lazy
@@ -87,23 +87,23 @@ public class HelldiverService {
         );
     }
 
-    public Helldiver updateHelldiver(Integer helldiverId, Helldiver helldiver) {
+    public Helldiver updateHelldiver(Integer helldiverId, Helldiver h) {
         Helldiver db = helldiverRepository.findByHelldiverId(helldiverId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Helldiver with ID [" + helldiverId + "] not found"));
 
-        if (helldiver.getCallSign() != null) db.setCallSign(helldiver.getCallSign());
-        if (helldiver.getLevel() != null) db.setLevel(helldiver.getLevel());
-        if (helldiver.getXpTotal() != null) db.setXpTotal(helldiver.getXpTotal());
-        if (helldiver.getKillsTotal() != null) db.setKillsTotal(helldiver.getKillsTotal());
-        if (helldiver.getDeathsTotal() != null) db.setDeathsTotal(helldiver.getDeathsTotal());
-        if (helldiver.getSuperCredits() != null) db.setSuperCredits(helldiver.getSuperCredits());
-        if (helldiver.getMedals() != null) db.setMedals(helldiver.getMedals());
-        if (helldiver.getMissionsCompleted() != null) db.setMissionsCompleted(helldiver.getMissionsCompleted());
-        if (helldiver.getSamplesTier1Collected() != null) db.setSamplesTier1Collected(helldiver.getSamplesTier1Collected());
-        if (helldiver.getSamplesTier2Collected() != null) db.setSamplesTier2Collected(helldiver.getSamplesTier2Collected());
-        if (helldiver.getSamplesTier3Collected() != null) db.setSamplesTier3Collected(helldiver.getSamplesTier3Collected());
-        if (helldiver.getRequisitionSlips() != null) db.setRequisitionSlips(helldiver.getRequisitionSlips());
+        UpdateUtils.updateIfPresent(h::getCallSign,              db::setCallSign);
+        UpdateUtils.updateIfPresent(h::getLevel,                 db::setLevel);
+        UpdateUtils.updateIfPresent(h::getXpTotal,               db::setXpTotal);
+        UpdateUtils.updateIfPresent(h::getKillsTotal,            db::setKillsTotal);
+        UpdateUtils.updateIfPresent(h::getDeathsTotal,           db::setDeathsTotal);
+        UpdateUtils.updateIfPresent(h::getSuperCredits,          db::setSuperCredits);
+        UpdateUtils.updateIfPresent(h::getMedals,                db::setMedals);
+        UpdateUtils.updateIfPresent(h::getMissionsCompleted,     db::setMissionsCompleted);
+        UpdateUtils.updateIfPresent(h::getSamplesTier1Collected, db::setSamplesTier1Collected);
+        UpdateUtils.updateIfPresent(h::getSamplesTier2Collected, db::setSamplesTier2Collected);
+        UpdateUtils.updateIfPresent(h::getSamplesTier3Collected, db::setSamplesTier3Collected);
+        UpdateUtils.updateIfPresent(h::getRequisitionSlips,      db::setRequisitionSlips);
 
         return helldiverRepository.save(db);
     }

@@ -64,18 +64,15 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<?> createAccount(@RequestBody @Valid Account account){
-
-        accountService.createOrModifyNewAccount(account);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{account_id}").buildAndExpand(account.getAccount_id()).toUri();
-
-        return ResponseEntity.created(location).body(account);
+        Map<String, Object> result = accountService.createAccount(account);
+        Account saved = (Account) result.get("account");
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{account_id}").buildAndExpand(saved.getAccount_id()).toUri();
+        return ResponseEntity.created(location).body(result);
     }
 
-    @PutMapping("/{accountId}")
+    @PutMapping("/update/{accountId}")
     public ResponseEntity<?> updateAccount(@PathVariable Integer accountId, @RequestBody Account account) {
-        account.setAccount_id(accountId);
-        Account updated = accountService.createOrModifyNewAccount(account);
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(accountService.updateAccount(accountId, account));
     }
 
 

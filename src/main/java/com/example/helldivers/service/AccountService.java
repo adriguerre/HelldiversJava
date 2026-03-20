@@ -13,10 +13,13 @@ import com.example.helldivers.specification.AccountSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.example.helldivers.utils.UpdateUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -53,7 +56,7 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public Account createOrModifyNewAccount(Account account) {
+    public Map<String, Object> createAccount(Account account) {
         if (account.getPassword() != null)
             account.setPassword(passwordEncoder.encode(account.getPassword()));
 
@@ -68,7 +71,23 @@ public class AccountService {
         helldiver.setCallSign(account.getUsername());
         helldiverRepository.save(helldiver);
 
-        return saved;
+        return Map.of("account", saved, "helldiver", helldiver);
+    }
+
+    public Account updateAccount(Integer accountId, Account account) {
+        Account db = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Account with ID [" + accountId + "] not found"));
+
+        UpdateUtils.updateIfPresent(account::getEmail,       db::setEmail);
+        UpdateUtils.updateIfPresent(account::getRegion,      db::setRegion);
+        UpdateUtils.updateIfPresent(account::getPlatformType, db::setPlatformType);
+        UpdateUtils.updateIfPresent(account::getPlatformId,  db::setPlatformId);
+
+        if (account.getPassword() != null)
+            db.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        return accountRepository.save(db);
     }
 
     public String login(String email, String password) {
