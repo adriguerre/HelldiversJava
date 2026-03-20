@@ -25,7 +25,7 @@ public class Account {
     private String email;
     private String region;
     @Column(name = "is_banned")
-    private boolean isBanned;
+    private Boolean isBanned;
     @Column(name = "ban_reason")
     private String banReason;
     @Column(name = "created_at")
@@ -40,7 +40,7 @@ public class Account {
     }
 
     public Account(Integer account_id, String platformId, PlatformType platformType,
-                   String email, String region, boolean isBanned, Timestamp createdAt,
+                   String email, String region, Boolean isBanned, Timestamp createdAt,
                    Timestamp lastLogin, String password) {
         this.account_id = account_id;
         this.platformId = platformId;
@@ -102,11 +102,11 @@ public class Account {
         this.region = region;
     }
 
-    public boolean isIsBanned() {
+    public Boolean isIsBanned() {
         return isBanned;
     }
 
-    public void setIsBanned(boolean is_banned) {
+    public void setIsBanned(Boolean is_banned) {
         this.isBanned = is_banned;
     }
 

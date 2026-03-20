@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,15 +35,30 @@ public class HelldiverController {
         return ResponseEntity.ok(helldivers);
     }
 
-
     @GetMapping("/{helldiverId}")
-    public ResponseEntity<?> getHelldiverByCallSign(@PathVariable Long helldiverId){
+    public ResponseEntity<?> getHelldiverByCallSign(@PathVariable Integer helldiverId){
         Optional<Helldiver> helldiver = helldiverService.getHelldiverById(helldiverId);
 
         if(helldiver.isPresent())
             return ResponseEntity.ok(helldiver);
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helldiver with ID: [" + helldiverId + "] not found ");
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createHelldiverAndLinkWithAccount(@RequestBody Helldiver helldiver){
+        return ResponseEntity.ok(helldiverService.createHelldiver(helldiver));
+    }
+
+    @DeleteMapping("/delete/{helldiverId}")
+    public ResponseEntity<?> deleteHelldiverById(@PathVariable Integer helldiverId){
+        Boolean deleted = helldiverService.deleteHelldiver(helldiverId);
+
+        if(deleted){
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helldiver with ID: [" + helldiverId + "] not found ");
     }
 
 }
