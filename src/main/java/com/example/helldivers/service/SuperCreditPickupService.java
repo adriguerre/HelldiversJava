@@ -36,6 +36,24 @@ public class SuperCreditPickupService {
         this.accountRepository = accountRepository;
     }
 
+    ///
+    /// 1. JWT → extract email from token
+    ///         ↓ fails → 401 "Account not found"
+    /// 2. email → find Account in DB
+    ///         ↓ fails → 404 "No helldiver linked to this account"
+    /// 3. Account → find linked Helldiver
+    ///         ↓ fails → 404 "Mission not found"
+    /// 4. missionId → find Mission
+    ///         ↓ fails → 409 "Mission is not in progress"
+    /// 5. started_at != null AND ended_at == null?
+    ///         ↓ fails → 403 "Your helldiver is not part of this mission"
+    /// 6. Is helldiver in squad_member for that mission?
+    ///         ↓ fails → 404 "Pickup not found in this mission"
+    /// 7. Does pickup with that id exist in that mission?
+    ///         ↓ fails → 409 "This pickup has already been collected"
+    /// 8. collected == false?
+    ///         ↓
+    /// 9. Mark pickup as collected + give credits to the entire squad
     public Map<String, Object> collectPickup(Integer missionId, Integer pickupId, String email) {
         // 1. Resolve account and helldiver from JWT email
         Account account = accountRepository.findByEmail(email)
@@ -43,23 +61,18 @@ public class SuperCreditPickupService {
 
         Helldiver helldiver = helldiverRepository.findByAccount(account)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No helldiver linked to this account"));
-        System.out.println(">>> HELLDIVER FOUND: " + helldiver.getHelldiverId());
 
         // 2. Find mission
         Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mission not found"));
-        System.out.println(">>> MISSION FOUND: " + mission.getMissionId() + " | started=" + mission.getStartedAt() + " | ended=" + mission.getEndedAt());
 
         // 3. Validate mission is still in progress
         if (mission.getStartedAt() == null || mission.getEndedAt() != null)
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Mission is not in progress");
-        System.out.println(">>> MISSION IN PROGRESS: OK");
 
         // 5. Validate helldiver is a member of the mission's squad
-        System.out.println(">>> SQUAD ID: " + mission.getSquadId() + " | HELLDIVER ID: " + helldiver.getHelldiverId());
         boolean isInSquad = squadMemberRepository.existsBySquadIdAndHelldiversId(
                 mission.getSquadId(), helldiver.getHelldiverId());
-        System.out.println(">>> IS IN SQUAD: " + isInSquad);
         if (!isInSquad)
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Your helldiver is not part of this mission");
 
