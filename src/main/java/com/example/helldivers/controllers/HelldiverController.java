@@ -51,14 +51,21 @@ public class HelldiverController {
     }
 
     @DeleteMapping("/delete/{helldiverId}")
-    public ResponseEntity<?> deleteHelldiverById(@PathVariable Integer helldiverId){
+    public ResponseEntity<?> deleteHelldiverById(@PathVariable Integer helldiverId) {
         Boolean deleted = helldiverService.deleteHelldiver(helldiverId);
 
-        if(deleted){
+        if (deleted) {
             return ResponseEntity.ok().build();
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helldiver with ID: [" + helldiverId + "] not found ");
+    }
+
+    @PutMapping("/update/{helldiverId}")
+    public ResponseEntity<?> updateHelldiverById(@PathVariable Integer helldiverId, @RequestBody Helldiver helldiver){
+        Helldiver helldiver_aux = helldiverService.updateHelldiver(helldiverId, helldiver);
+
+        return ResponseEntity.ok(helldiver_aux);
     }
 
 }

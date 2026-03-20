@@ -2,9 +2,11 @@ package com.example.helldivers.service;
 
 import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.AccountRole;
+import com.example.helldivers.domain.Helldiver;
 import com.example.helldivers.domain.Role;
 import com.example.helldivers.repository.AccountRepository;
 import com.example.helldivers.repository.AccountRoleRepository;
+import com.example.helldivers.repository.HelldiverRepository;
 import com.example.helldivers.repository.RoleRepository;
 import com.example.helldivers.security.JwtUtil;
 import com.example.helldivers.specification.AccountSpecification;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,8 @@ public class AccountService {
 
     private AccountRepository accountRepository;
 
+    @Autowired
+    private HelldiverRepository helldiverRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
@@ -57,6 +62,11 @@ public class AccountService {
         Role userRole = roleRepository.findByName("USER");
         AccountRole accountRole = new AccountRole(saved.getAccount_id().longValue(), userRole.getRoleId());
         accountRoleRepository.save(accountRole);
+
+        Helldiver helldiver = new Helldiver();
+        helldiver.setAccount(saved);
+        helldiver.setCallSign(account.getUsername());
+        helldiverRepository.save(helldiver);
 
         return saved;
     }

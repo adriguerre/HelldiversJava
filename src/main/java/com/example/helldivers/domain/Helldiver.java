@@ -46,11 +46,6 @@ public class Helldiver {
     public Helldiver() {
     }
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-    }
-
     public Integer getHelldiverId() {
         return helldiverId;
     }
