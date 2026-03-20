@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
@@ -72,6 +75,16 @@ public class AccountController {
 
     @PutMapping("/update/{accountId}")
     public ResponseEntity<?> updateAccount(@PathVariable Integer accountId, @RequestBody Account account) {
+
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof UsernamePasswordAuthenticationToken))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid token provided");
+
+        Integer tokenAccountId = (Integer) ((UsernamePasswordAuthenticationToken) auth).getDetails();
+        if (!tokenAccountId.equals(accountId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only update your own account");
+
+
         return ResponseEntity.ok(accountService.updateAccount(accountId, account));
     }
 

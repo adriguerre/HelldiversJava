@@ -99,15 +99,17 @@ public class AccountService {
             Role role = roleRepository.findById(accountRole.getRoleId()).orElse(null);
             String roleName = role != null ? role.getName() : "USER";
 
-            return jwtUtil.generateToken(email, roleName);
+            return jwtUtil.generateToken(email, roleName, account.get().getAccount_id());
         }
 
         return null;
     }
 
 
+    @org.springframework.transaction.annotation.Transactional
     public Boolean deleteAccountById(Integer accountId){
         if (accountRepository.existsById(accountId)) {
+            accountRoleRepository.deleteByAccountId(accountId.longValue());
             accountRepository.deleteById(accountId);
             return true;
         }

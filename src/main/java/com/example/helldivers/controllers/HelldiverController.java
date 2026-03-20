@@ -1,13 +1,18 @@
 package com.example.helldivers.controllers;
 
+import com.example.helldivers.domain.Account;
 import com.example.helldivers.domain.Helldiver;
 import com.example.helldivers.service.HelldiverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +68,21 @@ public class HelldiverController {
 
     @PutMapping("/update/{helldiverId}")
     public ResponseEntity<?> updateHelldiverById(@PathVariable Integer helldiverId, @RequestBody Helldiver helldiver){
-        Helldiver helldiver_aux = helldiverService.updateHelldiver(helldiverId, helldiver);
+        Optional<Helldiver> dbHelldiver = helldiverService.getHelldiverById(helldiverId);
 
+        if(dbHelldiver.isPresent()){
+            Integer accountId = dbHelldiver.get().getAccount().getAccount_id();
+
+            var auth = SecurityContextHolder.getContext().getAuthentication();
+            if(!(auth instanceof UsernamePasswordAuthenticationToken))
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid token provided");
+
+            Integer tokenAccountId = (Integer) ((UsernamePasswordAuthenticationToken) auth).getDetails();
+            if(!tokenAccountId.equals(accountId))
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You can only update your own helldiver info");
+        }
+
+        Helldiver helldiver_aux = helldiverService.updateHelldiver(helldiverId, helldiver);
         return ResponseEntity.ok(helldiver_aux);
     }
 
