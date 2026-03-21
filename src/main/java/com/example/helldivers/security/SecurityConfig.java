@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/stratagems/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/missions/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/missions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/mstats/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

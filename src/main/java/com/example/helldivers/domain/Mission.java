@@ -45,16 +45,15 @@ public class Mission {
     private Integer xpEarned;
     @Column(name = "medals_earned")
     private Integer medalsEarned;
+    @Column(name = "mission_stats_saved")
+    private Boolean missionStatsSaved;
 
 
     public Mission() {}
 
-    public Mission(Integer missionId, Planet planet, Integer squadId, MissionType missionType,
-                   Integer difficulty, FactionType enemyFaction, Timestamp startedAt, Timestamp endedAt,
-                   ResultType missionResult, Integer samplesTier1Found, Integer samplesTier2Found,
-                   Integer samplesTier3Found, Integer xpEarned, Integer medalsEarned) {
+    public Mission(Integer missionId, Planet planet, Integer squadId, MissionType missionType, Integer difficulty, FactionType enemyFaction, Timestamp startedAt, Timestamp endedAt, ResultType missionResult, Integer samplesTier1Found, Integer samplesTier2Found, Integer samplesTier3Found, Integer xpEarned, Integer medalsEarned, Boolean missionStatsSaved) {
         this.missionId = missionId;
-        this.planet= planet;
+        this.planet = planet;
         this.squadId = squadId;
         this.missionType = missionType;
         this.difficulty = difficulty;
@@ -67,6 +66,19 @@ public class Mission {
         this.samplesTier3Found = samplesTier3Found;
         this.xpEarned = xpEarned;
         this.medalsEarned = medalsEarned;
+        this.missionStatsSaved = missionStatsSaved;
+    }
+
+    public void setPlanet(Planet planet) {
+        this.planet = planet;
+    }
+
+    public Boolean getMissionStatsSaved() {
+        return missionStatsSaved;
+    }
+
+    public void setMissioStatsSaved(Boolean missionStatsSaved) {
+        this.missionStatsSaved = missionStatsSaved;
     }
 
     public Integer getMissionId() {

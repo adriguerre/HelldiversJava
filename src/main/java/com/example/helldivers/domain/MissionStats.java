@@ -9,7 +9,7 @@ public class MissionStats {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "stat_id")
+
     private Integer statId;
     @Column(name = "mission_id")
     private Integer missionId;

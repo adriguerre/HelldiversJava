@@ -1,5 +1,6 @@
 package com.example.helldivers.controllers;
 
+import com.example.helldivers.service.MissionStatsService;
 import com.example.helldivers.service.SuperCreditPickupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,4 +27,5 @@ public class MissionController {
         String email = auth.getName();
         return ResponseEntity.ok(pickupService.collectPickup(missionId, pickupId, email));
     }
+
 }

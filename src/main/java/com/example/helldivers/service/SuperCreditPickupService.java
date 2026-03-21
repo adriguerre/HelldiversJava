@@ -1,9 +1,6 @@
 package com.example.helldivers.service;
 
-import com.example.helldivers.domain.Account;
-import com.example.helldivers.domain.Helldiver;
-import com.example.helldivers.domain.Mission;
-import com.example.helldivers.domain.SuperCreditPickup;
+import com.example.helldivers.domain.*;
 import com.example.helldivers.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -112,4 +109,7 @@ public class SuperCreditPickupService {
                 "total_super_credits", collectorTotal
         );
     }
+
+
+
 }
