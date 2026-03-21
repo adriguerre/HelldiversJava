@@ -2,6 +2,7 @@ package com.example.helldivers.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +21,11 @@ public class JwtUtil {
        return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role, Integer accountId) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
+                .claim("accountId", accountId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSigningKey())
@@ -53,5 +55,14 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .get("role", String.class);
+    }
+
+    public Integer extractAccountId(String token){
+       return Jwts.parserBuilder()
+               .setSigningKey(getSigningKey())
+               .build()
+               .parseClaimsJws(token)
+               .getBody()
+               .get("accountId", Integer.class);
     }
 }

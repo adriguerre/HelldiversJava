@@ -17,27 +17,31 @@ public class Helldiver {
     @JoinColumn(name = "account_id")
     @JsonProperty("account")
     private Account account;
-    private String callsign;
-    private Integer level;
+    @Column(name = "callsign")
+    @JsonProperty("callsign")
+    private String callSign;
+    private Integer level = 1;
     @Column(name = "xp_total")
-    private Integer xpTotal;
+    private Integer xpTotal = 0;
     @Column(name = "kills_total")
-    private Integer killsTotal;
+    private Integer killsTotal = 0;
     @Column(name = "deaths_total")
-    private Integer deathsTotal;
+    private Integer deathsTotal = 0;
     @Column(name = "super_credits")
-    private Integer superCredits;
+    private Integer superCredits = 0;
     @Column(name = "created_at")
     private Timestamp createdAt;
-    private Integer medals;
+    private Integer medals = 0;
     @Column(name = "missions_completed")
-    private Integer missionsCompleted;
+    private Integer missionsCompleted = 0;
     @Column(name = "samples_tier_1_collected")
-    private Integer samplesTier1Collected;
+    private Integer samplesTier1Collected = 0;
     @Column(name = "samples_tier_2_collected")
-    private Integer samplesTier2Collected;
+    private Integer samplesTier2Collected = 0;
     @Column(name = "samples_tier_3_collected")
-    private Integer samplesTier3Collected;
+    private Integer samplesTier3Collected = 0;
+    @Column( name ="requisition_slips")
+    private Integer requisitionSlips = 0;
 
     public Helldiver() {
     }
@@ -58,12 +62,12 @@ public class Helldiver {
         this.account = account;
     }
 
-    public String getCallsign() {
-        return callsign;
+    public String getCallSign() {
+        return callSign;
     }
 
-    public void setCallsign(String callsign) {
-        this.callsign = callsign;
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
     }
 
     public Integer getLevel() {
@@ -153,4 +157,8 @@ public class Helldiver {
     public void setSamplesTier3Collected(Integer samples_tier_3_collected) {
         this.samplesTier3Collected = samples_tier_3_collected;
     }
+
+    public Integer getRequisitionSlips() {return requisitionSlips;}
+
+    public void setRequisitionSlips(Integer requisitionSlips) {this.requisitionSlips = requisitionSlips;}
 }

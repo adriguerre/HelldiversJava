@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
@@ -64,18 +67,25 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<?> createAccount(@RequestBody @Valid Account account){
-
-        accountService.createOrModifyNewAccount(account);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{account_id}").buildAndExpand(account.getAccount_id()).toUri();
-
-        return ResponseEntity.created(location).body(account);
+        Map<String, Object> result = accountService.createAccount(account);
+        Account saved = (Account) result.get("account");
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{account_id}").buildAndExpand(saved.getAccount_id()).toUri();
+        return ResponseEntity.created(location).body(result);
     }
 
-    @PutMapping("/{accountId}")
+    @PutMapping("/update/{accountId}")
     public ResponseEntity<?> updateAccount(@PathVariable Integer accountId, @RequestBody Account account) {
-        account.setAccount_id(accountId);
-        Account updated = accountService.createOrModifyNewAccount(account);
-        return ResponseEntity.ok(updated);
+
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof UsernamePasswordAuthenticationToken))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid token provided");
+
+        Integer tokenAccountId = (Integer) ((UsernamePasswordAuthenticationToken) auth).getDetails();
+        if (!tokenAccountId.equals(accountId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only update your own account");
+
+
+        return ResponseEntity.ok(accountService.updateAccount(accountId, account));
     }
 
 
