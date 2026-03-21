@@ -627,15 +627,15 @@ COPY public.squad_member (squad_member_id, squad_id, helldivers_id, is_host, joi
 10	5	22	f	2026-03-15 15:21:22.531187+00	2	10
 \.
 COPY public.mission (mission_id, planet_id, squad_id, mission_type, difficulty, enemy_faction, started_at, ended_at, mission_result, samples_tier_1_found, samples_tier_2_found, samples_tier_3_found, xp_earned, medals_earned, mission_stats_saved) FROM stdin;
-1	1	1	CIVILIANS	3	BUGS	2026-03-15 13:22:54.204686+00	\N	\N	5	3	1	800	10	f
+1	1	1	CIVILIANS	3	TERMINIDS	2026-03-15 13:22:54.204686+00	\N	\N	5	3	1	800	10	f
 2	2	2	ISMC	5	AUTOMATONS	2026-03-15 11:22:54.204686+00	\N	\N	2	1	0	200	2	f
 3	3	3	CIVILIANS	4	TERMINIDS	2026-03-15 09:22:54.204686+00	\N	\N	8	4	2	1200	15	f
 4	4	4	ISMC	7	ILLUMINATE	2026-03-15 07:22:54.204686+00	\N	\N	6	5	3	1800	20	f
-5	5	5	CIVILIANS	2	BUGS	2026-03-15 05:22:54.204686+00	\N	\N	1	0	0	100	1	f
+5	5	5	CIVILIANS	2	TERMINIDS	2026-03-15 05:22:54.204686+00	\N	\N	1	0	0	100	1	f
 6	6	6	ISMC	6	AUTOMATONS	2026-03-15 03:22:54.204686+00	\N	\N	7	4	2	1500	18	f
 7	7	7	CIVILIANS	8	TERMINIDS	2026-03-15 01:22:54.204686+00	\N	\N	9	6	4	2200	25	f
 8	8	8	ISMC	3	ILLUMINATE	2026-03-14 23:22:54.204686+00	\N	\N	3	1	0	300	3	f
-9	9	9	CIVILIANS	5	BUGS	2026-03-14 21:22:54.204686+00	\N	\N	6	3	1	1000	12	f
+9	9	9	CIVILIANS	5	TERMINIDS	2026-03-14 21:22:54.204686+00	\N	\N	6	3	1	1000	12	f
 10	10	10	ISMC	9	AUTOMATONS	2026-03-14 19:22:54.204686+00	\N	\N	10	7	5	2800	30	f
 \.
 COPY public.mission_stats (stat_id, mission_id, helldiver_id, kills, deaths, friendly_kills, shots_fired, accuracy_pct, stratagems_used, distance_travelled, objectives_done) FROM stdin;
