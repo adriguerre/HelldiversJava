@@ -125,7 +125,8 @@ CREATE TABLE public.mission (
                                 samples_tier_2_found integer,
                                 samples_tier_3_found integer,
                                 xp_earned integer,
-                                medals_earned integer
+                                medals_earned integer,
+                                mission_stats_saved boolean DEFAULT false
 );
 ALTER TABLE public.mission ALTER COLUMN mission_id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.mission_mission_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
@@ -624,17 +625,17 @@ COPY public.squad_member (squad_member_id, squad_id, helldivers_id, is_host, joi
 9	5	21	t	2026-03-15 15:21:22.531187+00	1	9
 10	5	22	f	2026-03-15 15:21:22.531187+00	2	10
 \.
-COPY public.mission (mission_id, planet_id, squad_id, mission_type, difficulty, enemy_faction, started_at, ended_at, mission_result, samples_tier_1_found, samples_tier_2_found, samples_tier_3_found, xp_earned, medals_earned) FROM stdin;
-1	1	1	CIVILIANS	3	BUGS	2026-03-15 13:22:54.204686+00	2026-03-15 14:22:54.204686+00	WIN	5	3	1	800	10
-2	2	2	ISMC	5	AUTOMATONS	2026-03-15 11:22:54.204686+00	2026-03-15 12:22:54.204686+00	LOSE	2	1	0	200	2
-3	3	3	CIVILIANS	4	TERMINIDS	2026-03-15 09:22:54.204686+00	2026-03-15 10:22:54.204686+00	WIN	8	4	2	1200	15
-4	4	4	ISMC	7	ILLUMINATE	2026-03-15 07:22:54.204686+00	2026-03-15 08:22:54.204686+00	WIN	6	5	3	1800	20
-5	5	5	CIVILIANS	2	BUGS	2026-03-15 05:22:54.204686+00	2026-03-15 06:22:54.204686+00	LOSE	1	0	0	100	1
-6	6	6	ISMC	6	AUTOMATONS	2026-03-15 03:22:54.204686+00	2026-03-15 04:22:54.204686+00	WIN	7	4	2	1500	18
-7	7	7	CIVILIANS	8	TERMINIDS	2026-03-15 01:22:54.204686+00	2026-03-15 02:22:54.204686+00	WIN	9	6	4	2200	25
-8	8	8	ISMC	3	ILLUMINATE	2026-03-14 23:22:54.204686+00	2026-03-15 00:22:54.204686+00	LOSE	3	1	0	300	3
-9	9	9	CIVILIANS	5	BUGS	2026-03-14 21:22:54.204686+00	2026-03-14 22:22:54.204686+00	WIN	6	3	1	1000	12
-10	10	10	ISMC	9	AUTOMATONS	2026-03-14 19:22:54.204686+00	2026-03-14 20:22:54.204686+00	WIN	10	7	5	2800	30
+COPY public.mission (mission_id, planet_id, squad_id, mission_type, difficulty, enemy_faction, started_at, ended_at, mission_result, samples_tier_1_found, samples_tier_2_found, samples_tier_3_found, xp_earned, medals_earned, mission_stats_saved) FROM stdin;
+1	1	1	CIVILIANS	3	BUGS	2026-03-15 13:22:54.204686+00	\N	\N	5	3	1	800	10	f
+2	2	2	ISMC	5	AUTOMATONS	2026-03-15 11:22:54.204686+00	\N	\N	2	1	0	200	2	f
+3	3	3	CIVILIANS	4	TERMINIDS	2026-03-15 09:22:54.204686+00	\N	\N	8	4	2	1200	15	f
+4	4	4	ISMC	7	ILLUMINATE	2026-03-15 07:22:54.204686+00	\N	\N	6	5	3	1800	20	f
+5	5	5	CIVILIANS	2	BUGS	2026-03-15 05:22:54.204686+00	\N	\N	1	0	0	100	1	f
+6	6	6	ISMC	6	AUTOMATONS	2026-03-15 03:22:54.204686+00	\N	\N	7	4	2	1500	18	f
+7	7	7	CIVILIANS	8	TERMINIDS	2026-03-15 01:22:54.204686+00	\N	\N	9	6	4	2200	25	f
+8	8	8	ISMC	3	ILLUMINATE	2026-03-14 23:22:54.204686+00	\N	\N	3	1	0	300	3	f
+9	9	9	CIVILIANS	5	BUGS	2026-03-14 21:22:54.204686+00	\N	\N	6	3	1	1000	12	f
+10	10	10	ISMC	9	AUTOMATONS	2026-03-14 19:22:54.204686+00	\N	\N	10	7	5	2800	30	f
 \.
 COPY public.mission_stats (stat_id, mission_id, helldiver_id, kills, deaths, friendly_kills, shots_fired, accuracy_pct, stratagems_used, distance_travelled, objectives_done) FROM stdin;
 1	1	13	120	2	0	400	78.5	5	1200	3
