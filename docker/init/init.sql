@@ -73,7 +73,8 @@ CREATE TABLE public.helldiver (
                                   missions_completed integer,
                                   samples_tier_1_collected integer,
                                   samples_tier_2_collected integer,
-                                  samples_tier_3_collected integer
+                                  samples_tier_3_collected integer,
+                                  requisition_slips integer DEFAULT 0
 );
 ALTER TABLE public.helldiver ALTER COLUMN helldiver_id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.helldiver_helldiver_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
@@ -517,20 +518,20 @@ COPY public.account_role (account_id, role_id, id) FROM stdin;
 19	2	13
 29	1	14
 \.
-COPY public.helldiver (helldiver_id, account_id, callsign, level, xp_total, kills_total, deaths_total, super_credits, created_at, medals, missions_completed, samples_tier_1_collected, samples_tier_2_collected, samples_tier_3_collected) FROM stdin;
-10	16	IronEagle	42	125000	3200	87	8500	2026-03-11 18:56:08.972584+00	230	145	34	120	100
-11	17	GhostDiver	28	64000	1800	134	4200	2026-03-11 18:56:08.972584+00	95	89	210	88	50
-12	18	SteelPatriot	55	280000	7800	45	120	2026-03-11 18:56:08.972584+00	15000	312	344	108	21
-13	19	Viper	35	98000	2500	60	7000	2026-03-15 15:21:03.581182+00	180	110	80	60	30
-14	20	Shadow	22	45000	1200	200	3000	2026-03-15 15:21:03.581182+00	70	55	40	20	10
-15	21	Blaze	48	210000	6000	30	15000	2026-03-15 15:21:03.581182+00	400	280	150	130	90
-16	22	Nova	15	18000	500	300	1000	2026-03-15 15:21:03.581182+00	25	20	10	5	0
-17	23	Rex	60	350000	9500	20	25000	2026-03-15 15:21:03.581182+00	800	400	200	180	120
-18	24	Frost	30	72000	1800	90	5500	2026-03-15 15:21:03.581182+00	130	95	70	50	20
-19	25	Titan	50	240000	7200	40	18000	2026-03-15 15:21:03.581182+00	500	320	180	150	100
-20	26	Lynx	18	28000	700	180	2000	2026-03-15 15:21:03.581182+00	45	35	20	10	5
-21	27	Hawk	42	130000	3800	75	9000	2026-03-15 15:21:03.581182+00	250	160	100	80	50
-22	28	Zeus	55	290000	8100	35	22000	2026-03-15 15:21:03.581182+00	650	350	190	160	110
+COPY public.helldiver (helldiver_id, account_id, callsign, level, xp_total, kills_total, deaths_total, super_credits, created_at, medals, missions_completed, samples_tier_1_collected, samples_tier_2_collected, samples_tier_3_collected, requisition_slips) FROM stdin;
+10	16	IronEagle	42	125000	3200	87	8500	2026-03-11 18:56:08.972584+00	230	145	34	120	100	500
+11	17	GhostDiver	28	64000	1800	134	4200	2026-03-11 18:56:08.972584+00	95	89	210	88	50	300
+12	18	SteelPatriot	55	280000	7800	45	120	2026-03-11 18:56:08.972584+00	15000	312	344	108	21	1200
+13	19	Viper	35	98000	2500	60	7000	2026-03-15 15:21:03.581182+00	180	110	80	60	30	450
+14	20	Shadow	22	45000	1200	200	3000	2026-03-15 15:21:03.581182+00	70	55	40	20	10	150
+15	21	Blaze	48	210000	6000	30	15000	2026-03-15 15:21:03.581182+00	400	280	150	130	90	900
+16	22	Nova	15	18000	500	300	1000	2026-03-15 15:21:03.581182+00	25	20	10	5	0	50
+17	23	Rex	60	350000	9500	20	25000	2026-03-15 15:21:03.581182+00	800	400	200	180	120	2000
+18	24	Frost	30	72000	1800	90	5500	2026-03-15 15:21:03.581182+00	130	95	70	50	20	600
+19	25	Titan	50	240000	7200	40	18000	2026-03-15 15:21:03.581182+00	500	320	180	150	100	1100
+20	26	Lynx	18	28000	700	180	2000	2026-03-15 15:21:03.581182+00	45	35	20	10	5	100
+21	27	Hawk	42	130000	3800	75	9000	2026-03-15 15:21:03.581182+00	250	160	100	80	50	700
+22	28	Zeus	55	290000	8100	35	22000	2026-03-15 15:21:03.581182+00	650	350	190	160	110	1800
 \.
 INSERT INTO public.helldiver (account_id, callsign, level, xp_total, kills_total, deaths_total, super_credits, created_at, medals, missions_completed, samples_tier_1_collected, samples_tier_2_collected, samples_tier_3_collected)
 VALUES
