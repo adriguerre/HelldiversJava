@@ -36,10 +36,13 @@ public class Mission {
     @Column(name = "mission_result")
     private ResultType missionResult;
     @Column(name = "samples_tier_1_found")
+    @JsonProperty("samples_tier_1_found")
     private Integer samplesTier1Found;
     @Column(name = "samples_tier_2_found")
+    @JsonProperty("samples_tier_2_found")
     private Integer samplesTier2Found;
     @Column(name = "samples_tier_3_found")
+    @JsonProperty("samples_tier_3_found")
     private Integer samplesTier3Found;
     @Column(name = "xp_earned")
     private Integer xpEarned;
@@ -77,7 +80,7 @@ public class Mission {
         return missionStatsSaved;
     }
 
-    public void setMissioStatsSaved(Boolean missionStatsSaved) {
+    public void setMissionStatsSaved(Boolean missionStatsSaved) {
         this.missionStatsSaved = missionStatsSaved;
     }
 

@@ -3,6 +3,7 @@ package com.example.helldivers.controllers;
 import com.example.helldivers.domain.Stratagem;
 import com.example.helldivers.enums.StratagemType;
 import com.example.helldivers.service.StratagemService;
+import com.example.helldivers.utils.UpdateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,18 +33,7 @@ public class StratagemController {
                                         @RequestParam(required = false) Integer uses,
                                         @RequestParam(required = false) String type){
 
-        StratagemType stratagemType = null;
-        List<Stratagem> stratagems = new ArrayList<>();
-
-        if(type != null){
-            try{
-                   stratagemType = StratagemType.valueOf(type.toUpperCase());
-            }catch(IllegalArgumentException e){
-                    stratagemType = null;
-            }
-        }
-
-        stratagems = stratagemService.getStratagems(name, backpack, uses, stratagemType);
+        List<Stratagem> stratagems = stratagemService.getStratagems(name, backpack, uses, UpdateUtils.parseEnum(StratagemType.class, type));
         if(stratagems.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
