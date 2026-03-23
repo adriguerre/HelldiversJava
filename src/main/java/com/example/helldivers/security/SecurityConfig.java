@@ -31,7 +31,13 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/accounts/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/planets").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/planets/**").permitAll()
+                        //.requestMatchers(HttpMethod.POST, "/planets/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.PUT, "/planets/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/planets/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/planets/**").permitAll() //Admin
+                        .requestMatchers(HttpMethod.PUT, "/planets/**").permitAll() //Admin
+                        .requestMatchers(HttpMethod.DELETE, "/planets/**").permitAll() //Admin
                         .requestMatchers(HttpMethod.GET, "/helldivers/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/helldivers/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/helldivers/**").permitAll()
@@ -41,16 +47,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/accounts/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/accounts/**").permitAll()
                         //.requestMatchers(HttpMethod.DELETE, "/accounts/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/accounts/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/accounts/**").permitAll() //Admin
                         .requestMatchers(HttpMethod.GET, "/weapons/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/armor/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/stratagems/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/missions/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/missions/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/missions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/missions/**").permitAll() //Admin
+                        .requestMatchers(HttpMethod.DELETE, "/missions/**").permitAll() //Admin
+                        .requestMatchers(HttpMethod.PUT, "/missions/**").permitAll() //Admin
                         //.requestMatchers(HttpMethod.POST, "/missions/create").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/missions/create").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.PUT, "/missions/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/missions/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/mstats/**").permitAll()
                         .anyRequest().authenticated()
                 )

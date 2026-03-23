@@ -12,6 +12,7 @@ public class Planet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "planet_id")
     private Integer planetId;
+    @Column(name = "name")
     private String name;
     private String sector;
     @Column(name = "liberation_rate")
