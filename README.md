@@ -1,19 +1,19 @@
 
-# Helldivers API 
+# Helldivers API
 
 Simulated PostgreSQL database and REST API built with Spring Boot, modelling the backend of a multiplayer game like Helldivers 2 — players, accounts, helldivers, missions, stratagems and more. Built as a learning project for backend development and database design.
 
 > 🚧 **Work in progress**: This project is currently under active development. Endpoints, data models and features may change at any time. New functionality will be added progressively.
 
 ## Requirements
- 
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
 - Git
 
 ## Seed Data
- 
+
 On first startup the database is automatically initialized with the following test data:
- 
+
 - 14 user accounts (bcrypt hashed passwords)
 - 13 helldivers with stats
 - 10 planets across different factions
@@ -21,36 +21,36 @@ On first startup the database is automatically initialized with the following te
 - 10 weapons (primary, secondary, grenades, support)
 - 10 missions with objectives and stats
 - Ship upgrades, loadouts, squads and more
- 
+
 ---
- 
+
 ## Getting Started
- 
+
 ### 1. Clone the repository
- 
+
 ```bash
 git clone https://github.com/adriguerre/HelldiversJava.git
 cd .\HelldiversJava\
 ```
- 
+
 ### 2. Run the project
- 
+
 ```bash
 docker compose up --build
 ```
- 
+
 This will automatically:
- 
+
 1. Build the Spring Boot application image
 2. Start PostgreSQL and initialize it with the schema and seed data (`docker/init/init.sql`)
 3. Start the application once the database is ready
- 
+
 The API will be available at: **`http://localhost:8080/helldivers/api/v1`**
  
 ---
- 
+
 ## Stopping the project
- 
+
 ```bash
 # Stop containers but keep the data
 docker compose down
@@ -79,21 +79,21 @@ docker compose down -v
 * **Docker**
 
 ## Local Development (without Docker)
- 
+
 If you want to run the application directly from the IDE without Docker, you need a local PostgreSQL instance running. In this mode Hibernate manages the schema automatically (`ddl-auto=update`), so the database is created and updated on startup — no manual steps needed.
- 
+
 Under normal circumstances the project connects to a real external database. However, for the purpose of showcasing the full behaviour of the API, a snapshot of the database at a specific point in time has been included in the repository (`docker/init/init.sql`). This allows anyone to run the project locally with realistic data without needing access to the original database.
  
 ---
- 
+
 ## Security
- 
+
 The API has **JWT (JSON Web Tokens)** authentication fully implemented. When active, all protected endpoints require a valid token in every request header:
- 
+
 ```
 Authorization: Bearer <token>
 ```
- 
+
 > ⚠️ **Test mode**: JWT security is currently disabled to allow full visibility of the API behaviour during testing and demonstration. This means endpoints that would otherwise be restricted — such as account data — are publicly accessible. Re-enabling Spring Security would immediately restrict access to those endpoints again.
  
 ---
@@ -131,7 +131,7 @@ Authorization: Bearer <token>
 <img width="1102" height="909" alt="hd_module_uml" src="https://github.com/user-attachments/assets/a745cdc7-54ec-44bc-8e9f-a86413f89f03" />
 
 ---
- 
+
 ## API Endpoints
 
 > All query parameters can be combined in a single request to apply multiple filters at once (e.g. `/armor?armor_slot=body&shop=true`).
@@ -156,51 +156,102 @@ Base URL: `http://localhost:8080/helldivers/api/v1`
 ### Helldivers
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers` | Get all helldivers |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers?callsign={callsign}` | Filter by call sign |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers?level={level}` | Filter by level |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers?medals={medals}` | Filter by medals count |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers?missions={missions}` | Filter by missions completed |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers?sc={sc}` | Filter by super credits |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers` | Get all helldivers — filters: `callsign`, `level`, `medals`, `missions`, `sc` |
 | ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/helldivers/{id}` | Get helldiver by ID |
-| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/helldivers/create` | Create a new helldiver (linked to an account) |
-| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/helldivers/update/{id}` * | Update a helldiver |
-| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/helldivers/delete/{id}` * | Delete a helldiver |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/helldivers` | Create a new helldiver (linked to an account) |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/helldivers/{id}` * | Update a helldiver |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/helldivers/{id}` * | Delete a helldiver |
 
 ### Planets
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/planets` | Get all planets |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/planets` | Get all planets — filters: `name` (partial), `sector`, `biome` (DESERT, TUNDRA, JUNGLE, URBAN), `faction` (TERMINIDS, AUTOMATONS, ILLUMINATE, FEDERATION), `cordX`, `cordY`, `maxhp` |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/planets/{id}` | Get planet by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/planets` | Create a new planet |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/planets/{id}` | Update a planet |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/planets/{id}` | Delete a planet |
 
 ### Weapons
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons` | Get all weapons |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons?weapon_type=primary` | Get primary weapons |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons?weapon_type=secondary` | Get secondary weapons |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons?weapon_type=grenade` | Get grenades |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons` | Get all weapons — filters: `weapon_type` (PRIMARY, SECONDARY, SUPPORT, GRENADE) |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/{id}` | Get weapon by ID |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/{id}/ammo` | Get all ammo types compatible with a weapon |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/{id}/attachments` | Get all attachments for a weapon |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/{id}/stats` | Get combat stats summary for a weapon |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/ammo/{ammoId}` | Get all weapons that use a specific ammo type |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/weapons/attachment/{attachmentId}` | Get all weapons compatible with a specific attachment |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/weapons` | Create a new weapon |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/weapons/{weaponId}/ammo/{ammoId}` | Link an ammo type to a weapon |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/weapons/{id}` | Update a weapon |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/weapons/{id}` | Delete a weapon |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/weapons/{weaponId}/ammo/{ammoId}` | Unlink an ammo type from a weapon |
+
+### Ammo
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/ammo` | Get all ammo types — filters: `caliber` (partial), `pen` (Light, Medium, Heavy) |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/ammo/{id}` | Get ammo by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/ammo` | Create a new ammo type |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/ammo/{id}` | Update an ammo type |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/ammo/{id}` | Delete an ammo type |
+
+### Attachments
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/attachments` | Get all attachments — filters: `category` (OPTICS, MAGAZINE, UNDERBARREL, MUZZLE...) |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/attachments/{id}` | Get attachment by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/attachments` | Create a new attachment |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/attachments/{attachmentId}/weapons/{weaponId}` | Link an attachment to a weapon |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/attachments/{id}` | Update an attachment |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/attachments/{id}` | Delete an attachment |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/attachments/{attachmentId}/weapons/{weaponId}` | Unlink an attachment from a weapon |
 
 ### Armor
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor` | Get all armor |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor?armor_slot=head` | Get head armor |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor?armor_slot=body` | Get body armor |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor?armor_slot=cape` | Get capes |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor?passive_id={id}` | Get armor by passive bonus |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor?shop=true` | Get premium armor (shop) |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor` | Get all armor — filters: `armor_slot` (HEAD, BODY, CAPE), `passive_id`, `shop` (true/false) |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/armor/{id}` | Get armor by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/armor` | Create a new armor piece |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/armor/{id}` | Update an armor piece |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/armor/{id}` | Delete an armor piece |
 
 ### Stratagems
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems` | Get all stratagems |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems?name={name}` | Search stratagems by name |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems?type={type}` | Filter by category (orbital, airstrike, support...) |
-| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems?backpack_slot={bool}` | Filter by backpack slot |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems` | Get all stratagems — filters: `name` (partial), `type` (ORBITAL, AIRSTRIKE, SUPPORT, SENTRY...), `backpack` (true/false), `uses` |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems/{id}` | Get stratagem by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/stratagems` | Create a new stratagem |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/stratagems/{id}` | Update a stratagem |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/stratagems/{id}` | Delete a stratagem |
+
+### Stratagem Attacks
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems/{id}/attacks` | Get all attacks for a stratagem |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems/{id}/attacks/{attackId}` | Get a specific attack by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/stratagems/{id}/attacks/create` | Add an attack to a stratagem |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/stratagems/{id}/attacks/update/{attackId}` | Update a stratagem attack |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/stratagems/{id}/attacks/delete/{attackId}` | Delete a stratagem attack |
+
+### Stratagem Entity
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/stratagems/{id}/entity` | Get the deployed entity for a stratagem |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/stratagems/{id}/entity/create` | Create a deployed entity for a stratagem |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/stratagems/{id}/entity/update` | Update a stratagem entity |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/stratagems/{id}/entity/delete` | Delete a stratagem entity |
 
 ### Missions
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/missions` | Get all missions — filters: `missionType` (CIVILIANS, ISMC), `difficulty` (1–10), `enemyFaction`, `inProgress`, `started`, `ended`, `missionResult` (WIN, LOSE), `missionStatsSaved` |
+| ![GET](https://img.shields.io/badge/GET-61affe?style=flat-square&logoColor=white) | `/missions/{id}` | Get mission by ID |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/missions` | Create a new mission |
+| ![PUT](https://img.shields.io/badge/PUT-fca130?style=flat-square&logoColor=white) | `/missions/{id}` | Update a mission |
+| ![DELETE](https://img.shields.io/badge/DELETE-f93e3e?style=flat-square&logoColor=white) | `/missions/{id}` | Delete a mission |
 | ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/missions/{missionId}/pickups/{pickupId}/collect` * | Collect a super credit pickup — distributes credits to all squad members |
-| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/mstats/{missionId}/saveStats` * | Save mission stats for a helldiver |
+| ![POST](https://img.shields.io/badge/POST-49cc90?style=flat-square&logoColor=white) | `/mstats/{missionId}/saveStats` * | Save mission stats for all helldivers in the mission |
+
+
 
