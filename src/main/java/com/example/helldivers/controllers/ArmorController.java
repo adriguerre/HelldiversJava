@@ -39,7 +39,7 @@ public class ArmorController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createArmor(@RequestBody Armor armor) {
         Armor created = armorService.createArmor(armor);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,12 +47,12 @@ public class ArmorController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/update/{armorId}")
+    @PutMapping("/{armorId}")
     public ResponseEntity<?> updateArmor(@PathVariable Integer armorId, @RequestBody Armor armor) {
         return ResponseEntity.ok(armorService.updateArmor(armorId, armor));
     }
 
-    @DeleteMapping("/delete/{armorId}")
+    @DeleteMapping("/{armorId}")
     public ResponseEntity<?> deleteArmor(@PathVariable Integer armorId) {
         if (armorService.deleteArmor(armorId))
             return ResponseEntity.ok("Armor with ID [" + armorId + "] deleted successfully");

@@ -50,12 +50,12 @@ public class HelldiverController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helldiver with ID: [" + helldiverId + "] not found ");
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createHelldiverAndLinkWithAccount(@RequestBody Helldiver helldiver){
         return ResponseEntity.ok(helldiverService.createHelldiver(helldiver));
     }
 
-    @DeleteMapping("/delete/{helldiverId}")
+    @DeleteMapping("/{helldiverId}")
     public ResponseEntity<?> deleteHelldiverById(@PathVariable Integer helldiverId) {
         Boolean deleted = helldiverService.deleteHelldiver(helldiverId);
 
@@ -66,7 +66,7 @@ public class HelldiverController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Helldiver with ID: [" + helldiverId + "] not found ");
     }
 
-    @PutMapping("/update/{helldiverId}")
+    @PutMapping("/{helldiverId}")
     public ResponseEntity<?> updateHelldiverById(@PathVariable Integer helldiverId, @RequestBody Helldiver helldiver){
         Optional<Helldiver> dbHelldiver = helldiverService.getHelldiverById(helldiverId);
 

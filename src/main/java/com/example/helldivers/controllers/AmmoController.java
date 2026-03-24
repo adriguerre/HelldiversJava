@@ -47,14 +47,14 @@ public class AmmoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ammo with ID [" + ammoId + "] not found");
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createAmmo(@RequestBody Ammo ammo){
         Ammo ammoCreated = ammoService.createAmmo(ammo);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{ammo_id}").buildAndExpand(ammoCreated.getAmmoId()).toUri();
         return ResponseEntity.created(location).body(ammoCreated);
     }
 
-    @DeleteMapping("/delete/{ammoId}")
+    @DeleteMapping("/{ammoId}")
     public ResponseEntity<?> deleteAmmo(@PathVariable Integer ammoId){
         Boolean ammoDeleted = ammoService.deleteAmmoById(ammoId);
 
@@ -64,7 +64,7 @@ public class AmmoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ammo with ID: [" + ammoId + "] not found");
     }
 
-    @PutMapping("/update/{ammoId}")
+    @PutMapping("/{ammoId}")
     public ResponseEntity<?> updateAmmoById(@PathVariable Integer ammoId, @RequestBody Ammo ammo){
         return ResponseEntity.ok(ammoService.updateAmmo(ammoId, ammo));
     }

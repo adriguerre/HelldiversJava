@@ -43,7 +43,7 @@ public class WeaponController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createWeapon(@RequestBody Weapon weapon) {
         Weapon created = weaponService.createWeapon(weapon);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -51,12 +51,12 @@ public class WeaponController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/update/{weaponId}")
+    @PutMapping("/{weaponId}")
     public ResponseEntity<?> updateWeapon(@PathVariable Integer weaponId, @RequestBody Weapon weapon) {
         return ResponseEntity.ok(weaponService.updateWeapon(weaponId, weapon));
     }
 
-    @DeleteMapping("/delete/{weaponId}")
+    @DeleteMapping("/{weaponId}")
     public ResponseEntity<?> deleteWeapon(@PathVariable Integer weaponId) {
         if (weaponService.deleteWeapon(weaponId))
             return ResponseEntity.ok("Weapon with ID [" + weaponId + "] deleted successfully");

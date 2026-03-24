@@ -37,7 +37,7 @@ public class AttachmentController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createAttachment(@RequestBody Attachment attachment) {
         Attachment created = attachmentService.createAttachment(attachment);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -45,13 +45,13 @@ public class AttachmentController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/update/{attachmentId}")
+    @PutMapping("/{attachmentId}")
     public ResponseEntity<?> updateAttachment(@PathVariable Integer attachmentId,
                                                @RequestBody Attachment attachment) {
         return ResponseEntity.ok(attachmentService.updateAttachment(attachmentId, attachment));
     }
 
-    @DeleteMapping("/delete/{attachmentId}")
+    @DeleteMapping("/{attachmentId}")
     public ResponseEntity<?> deleteAttachment(@PathVariable Integer attachmentId) {
         if (attachmentService.deleteAttachment(attachmentId))
             return ResponseEntity.ok("Attachment with ID [" + attachmentId + "] deleted successfully");

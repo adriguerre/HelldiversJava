@@ -40,7 +40,7 @@ public class StratagemController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createStratagem(@RequestBody Stratagem stratagem) {
         Stratagem created = stratagemService.createStratagem(stratagem);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -48,12 +48,12 @@ public class StratagemController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/update/{stratagemId}")
+    @PutMapping("/{stratagemId}")
     public ResponseEntity<?> updateStratagem(@PathVariable Integer stratagemId, @RequestBody Stratagem stratagem) {
         return ResponseEntity.ok(stratagemService.updateStratagem(stratagemId, stratagem));
     }
 
-    @DeleteMapping("/delete/{stratagemId}")
+    @DeleteMapping("/{stratagemId}")
     public ResponseEntity<?> deleteStratagem(@PathVariable Integer stratagemId) {
         if (stratagemService.deleteStratagem(stratagemId))
             return ResponseEntity.ok("Stratagem with ID [" + stratagemId + "] deleted successfully");

@@ -73,7 +73,7 @@ public class AccountController {
         return ResponseEntity.created(location).body(result);
     }
 
-    @PutMapping("/update/{accountId}")
+    @PutMapping("/{accountId}")
     public ResponseEntity<?> updateAccount(@PathVariable Integer accountId, @RequestBody Account account) {
 
         var auth = SecurityContextHolder.getContext().getAuthentication();

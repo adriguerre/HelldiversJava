@@ -36,7 +36,7 @@ public class StratagemAttackController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createAttack(@PathVariable Integer stratagemId,
                                            @RequestBody StratagemAttack attack) {
         StratagemAttack created = attackService.createAttack(stratagemId, attack);
@@ -45,14 +45,14 @@ public class StratagemAttackController {
         return ResponseEntity.created(location).body(created);
     }
 
-    @PutMapping("/update/{attackId}")
+    @PutMapping("/{attackId}")
     public ResponseEntity<?> updateAttack(@PathVariable Integer stratagemId,
                                            @PathVariable Integer attackId,
                                            @RequestBody StratagemAttack attack) {
         return ResponseEntity.ok(attackService.updateAttack(attackId, attack));
     }
 
-    @DeleteMapping("/delete/{attackId}")
+    @DeleteMapping("/{attackId}")
     public ResponseEntity<?> deleteAttack(@PathVariable Integer stratagemId,
                                            @PathVariable Integer attackId) {
         if (attackService.deleteAttack(attackId))

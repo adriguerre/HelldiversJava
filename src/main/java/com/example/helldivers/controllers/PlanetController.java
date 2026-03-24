@@ -49,7 +49,7 @@ public class PlanetController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No planet found with ID [" + planetId + "]");
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createPlanet(@RequestBody Planet planet){
         Boolean planetCreated = planetService.createPlanet(planet);
 
@@ -59,7 +59,7 @@ public class PlanetController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(planet);
     }
 
-    @DeleteMapping("/delete/{planetId}")
+    @DeleteMapping("/{planetId}")
     public ResponseEntity<?> deletePlanetById(@PathVariable Integer planetId){
         Boolean planetDeleted = planetService.deletePlanet(planetId);
 
@@ -69,7 +69,7 @@ public class PlanetController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Planet with ID [" + planetId + "] couldn't be deleted");
     }
 
-    @PutMapping("/update/{planetId}")
+    @PutMapping("/{planetId}")
     public ResponseEntity<?> updatePlanetById(@PathVariable Integer planetId, @RequestBody Planet planet){
         return ResponseEntity.ok(planetService.updatePlanet(planetId, planet));
     }

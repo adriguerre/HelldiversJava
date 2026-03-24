@@ -62,7 +62,7 @@ public class MissionController {
         return ResponseEntity.ok(pickupService.collectPickup(missionId, pickupId, email));
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createMission(@RequestBody Mission mission){
         Boolean missionCreated = missionService.createMission(mission);
 
@@ -93,7 +93,7 @@ public class MissionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mission with ID [" + missionId + "] couldnt be deleted");
     }
 
-    @PutMapping("/update/{missionId}")
+    @PutMapping("/{missionId}")
     public ResponseEntity<?> updateMissionById(@PathVariable Integer missionId, @RequestBody Mission mission){
         return ResponseEntity.ok(missionService.updateMission(missionId, mission));
     }

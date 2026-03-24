@@ -23,20 +23,20 @@ public class StratagemEntityController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createEntity(@PathVariable Integer stratagemId,
                                            @RequestBody StratagemEntity entity) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(entityService.createEntity(stratagemId, entity));
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public ResponseEntity<?> updateEntity(@PathVariable Integer stratagemId,
                                            @RequestBody StratagemEntity entity) {
         return ResponseEntity.ok(entityService.updateEntity(stratagemId, entity));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public ResponseEntity<?> deleteEntity(@PathVariable Integer stratagemId) {
         if (entityService.deleteEntity(stratagemId))
             return ResponseEntity.ok("Entity for stratagem [" + stratagemId + "] deleted successfully");
