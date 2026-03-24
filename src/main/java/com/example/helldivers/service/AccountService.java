@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.example.helldivers.utils.UpdateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -47,11 +48,14 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Account> getAccountsFiltered(String region, String platformType, Boolean isBanned) {
         return accountRepository.findAll(
                 AccountSpecification.withFilters(region, platformType, isBanned)
         );
     }
+
+    @Transactional(readOnly = true)
     public Optional<Account> getAccountById(Integer id){
         return accountRepository.findById(id);
     }
@@ -106,7 +110,7 @@ public class AccountService {
     }
 
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public Boolean deleteAccountById(Integer accountId){
         if (accountRepository.existsById(accountId)) {
             accountRoleRepository.deleteByAccountId(accountId.longValue());

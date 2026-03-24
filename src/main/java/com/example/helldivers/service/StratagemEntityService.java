@@ -29,6 +29,7 @@ public class StratagemEntityService {
         this.stratagemRepository = stratagemRepository;
     }
 
+    @Transactional(readOnly = true)
     public Optional<StratagemEntity> getEntityByStratagem(Integer stratagemId) {
         if (!stratagemRepository.existsById(stratagemId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,

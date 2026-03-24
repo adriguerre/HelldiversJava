@@ -31,10 +31,12 @@ public class WeaponService {
         this.ammoRepository = ammoRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Weapon> getAllWeapons(WeaponType weaponType){
         return weaponRepository.findAll(WeaponSpecification.withFilters(weaponType));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Weapon> getWeaponById(Integer weaponId){
         return weaponRepository.findById(weaponId);
     }
@@ -114,6 +116,7 @@ public class WeaponService {
         return true;
     }
 
+    @Transactional(readOnly = true)
     public List<Ammo> getAmmoByWeapon(Integer weaponId) {
         return weaponRepository.findById(weaponId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -121,6 +124,7 @@ public class WeaponService {
                 .getAmmoTypes();
     }
 
+    @Transactional(readOnly = true)
     public List<WeaponAttachment> getAttachmentsByWeapon(Integer weaponId) {
         return weaponRepository.findById(weaponId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -128,14 +132,17 @@ public class WeaponService {
                 .getAttachments();
     }
 
+    @Transactional(readOnly = true)
     public List<Weapon> getWeaponsByAmmo(Integer ammoId) {
         return weaponRepository.findByAmmoId(ammoId);
     }
 
+    @Transactional(readOnly = true)
     public List<Weapon> getWeaponsByAttachment(Integer attachmentId) {
         return weaponRepository.findByAttachmentId(attachmentId);
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getWeaponStats(Integer weaponId) {
         Weapon w = weaponRepository.findById(weaponId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

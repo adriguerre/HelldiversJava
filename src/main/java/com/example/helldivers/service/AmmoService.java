@@ -5,10 +5,10 @@ import com.example.helldivers.domain.Planet;
 import com.example.helldivers.repository.AmmoRepository;
 import com.example.helldivers.specification.AmmoSpecification;
 import com.example.helldivers.utils.UpdateUtils;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -24,10 +24,12 @@ public class AmmoService {
         this.ammoRepository = ammoRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Ammo> getAmmoWithParams(String caliber, String pen){
         return ammoRepository.findAll(AmmoSpecification.withFilters(caliber, pen));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Ammo> getAmmoById(Integer ammoId){
         return ammoRepository.findById(ammoId);
     }
@@ -41,7 +43,7 @@ public class AmmoService {
         }
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public Boolean deleteAmmoById(Integer ammoId){
         if (ammoRepository.existsById(ammoId)) {
             ammoRepository.deleteById(ammoId);

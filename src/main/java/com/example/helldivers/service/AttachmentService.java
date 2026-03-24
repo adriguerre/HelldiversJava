@@ -32,10 +32,12 @@ public class AttachmentService {
         this.weaponRepository = weaponRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Attachment> getAllAttachments(String category) {
         return attachmentRepository.findAll(AttachmentSpecification.withFilters(category));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Attachment> getAttachmentById(Integer id) {
         return attachmentRepository.findById(id);
     }

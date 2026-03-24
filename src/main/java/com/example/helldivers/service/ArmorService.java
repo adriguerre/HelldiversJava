@@ -28,10 +28,12 @@ public class ArmorService {
         this.passiveBonusRepository = passiveBonusRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Armor> getAllArmors(ArmorSlot armorSlot, Integer passive_id, Boolean purchaseableArmor){
         return armorRepository.findAll(ArmorSpecification.withFilters(armorSlot, passive_id, purchaseableArmor));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Armor> getArmorById(Integer armorId) {
         return armorRepository.findById(armorId);
     }

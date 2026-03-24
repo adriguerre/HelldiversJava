@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,6 +36,7 @@ public class HelldiverService {
         this.helldiverRepository = helldiverRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Helldiver> getAllHelldivers(String callSign, Integer level,
                                             Integer medals, Integer missionsCompleted, Integer superCredits){
 
@@ -42,10 +44,7 @@ public class HelldiverService {
                 missionsCompleted, superCredits));
     }
 
-    public Optional<Helldiver> getHelldiverByCallSign(String callSign){
-        return helldiverRepository.findByCallSign(callSign);
-    }
-
+    @Transactional(readOnly = true)
     public Optional<Helldiver> getHelldiverById(Integer helldiverId){
         return helldiverRepository.findByHelldiverId(helldiverId);
     }
@@ -109,7 +108,7 @@ public class HelldiverService {
     }
 
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public Boolean deleteHelldiver(Integer helldiverId){
         if (helldiverRepository.existsById(helldiverId)) {
             helldiverRepository.deleteByHelldiverId(helldiverId);

@@ -22,10 +22,12 @@ public class StratagemService {
         this.stratagemRepository = stratagemRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Stratagem> getStratagems(String name, Boolean backpack_slot, Integer uses_per_mission, StratagemType stratagem_type){
         return stratagemRepository.findAll(StratagemSpecification.withFilters(name, backpack_slot, uses_per_mission, stratagem_type));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Stratagem> getStratagemById(Integer stratagem_id){
         return stratagemRepository.findById(stratagem_id);
     }

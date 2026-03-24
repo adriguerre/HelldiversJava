@@ -6,11 +6,11 @@ import com.example.helldivers.enums.FactionType;
 import com.example.helldivers.repository.PlanetRepository;
 import com.example.helldivers.specification.PlanetSpecification;
 import com.example.helldivers.utils.UpdateUtils;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

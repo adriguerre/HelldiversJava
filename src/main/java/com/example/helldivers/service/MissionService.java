@@ -9,10 +9,12 @@ import com.example.helldivers.specification.MissionSpecification;
 import com.example.helldivers.utils.UpdateUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class MissionService {
 
 
     private MissionRepository missionRepository;
-
+    private static final Logger log = LoggerFactory.getLogger(MissionService.class);
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -32,6 +34,7 @@ public class MissionService {
         this.missionRepository = missionRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Mission> getMissions(MissionType missionType, Integer difficulty, FactionType enemyFaction, Boolean inProgress, Boolean started,
                                      Boolean ended, ResultType missionResult, Boolean missionStatsSaved){
 
@@ -41,6 +44,7 @@ public class MissionService {
         return missions;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Mission> getMissionById(Integer missionId){
         return missionRepository.findById(missionId);
     }
@@ -50,7 +54,7 @@ public class MissionService {
             missionRepository.save(mission);
         }
         catch(Exception ex){
-            System.out.println("ERROR ON MISSION CREATION: " + ex.getMessage());
+            log.error("ERROR ON MISSION CREATION: {}", ex.getMessage());
             return false;
         }
 
@@ -62,7 +66,7 @@ public class MissionService {
             missionRepository.deleteById(missionId);
         }
         catch(Exception ex){
-            System.out.println("ERROR ON MISSION DELETION: " + ex.getMessage());
+            log.error("ERROR ON MISSION DELETION: {}", ex.getMessage());
             return false;
         }
         return true;
@@ -88,7 +92,7 @@ public class MissionService {
 
         missionRepository.save(db);
         entityManager.flush();
-        entityManager.refresh(db);
+        //entityManager.refresh(db);
         return db;
     }
 }

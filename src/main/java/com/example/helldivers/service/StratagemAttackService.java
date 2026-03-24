@@ -25,6 +25,7 @@ public class StratagemAttackService {
         this.stratagemRepository = stratagemRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<StratagemAttack> getAttacksByStratagem(Integer stratagemId) {
         if (!stratagemRepository.existsById(stratagemId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -32,6 +33,7 @@ public class StratagemAttackService {
         return attackRepository.findByStratagem_StratagemId(stratagemId);
     }
 
+    @Transactional(readOnly = true)
     public Optional<StratagemAttack> getAttackById(Integer attackId) {
         return attackRepository.findById(attackId);
     }
