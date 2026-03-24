@@ -377,6 +377,64 @@ CREATE TABLE public.weapon (
 ALTER TABLE public.weapon ALTER COLUMN weapon_id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.weapon_weapon_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
     );
+ALTER TABLE public.weapon
+    ADD COLUMN horizontal_recoil DOUBLE PRECISION,
+    ADD COLUMN vertical_recoil DOUBLE PRECISION,
+    ADD COLUMN spread_horizontal DOUBLE PRECISION,
+    ADD COLUMN spread_vertical DOUBLE PRECISION,
+    ADD COLUMN sway DOUBLE PRECISION,
+    ADD COLUMN ergonomics INTEGER,
+    ADD COLUMN spare_magazines INTEGER,
+    ADD COLUMN starting_magazines INTEGER,
+    ADD COLUMN mags_from_supply INTEGER,
+    ADD COLUMN mags_from_ammo_box INTEGER;
+CREATE TABLE public.ammo (
+    ammo_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    caliber character varying(20),
+    mass_grams double precision,
+    initial_velocity_ms double precision,
+    drag_factor_pct double precision,
+    gravity_factor_pct double precision,
+    penetration_slowdown_pct double precision,
+    damage_standard integer,
+    damage_standard_type character varying(50),
+    damage_durable integer,
+    damage_durable_type character varying(50),
+    penetration_direct smallint,
+    penetration_direct_name character varying(50),
+    penetration_slight_angle smallint,
+    penetration_slight_name character varying(50),
+    penetration_large_angle smallint,
+    penetration_large_name character varying(50),
+    penetration_extreme_angle smallint,
+    penetration_extreme_name character varying(50),
+    demolition_force smallint,
+    stagger_force smallint,
+    push_force smallint
+);
+ALTER TABLE public.ammo ALTER COLUMN ammo_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.ammo_ammo_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
+    );
+CREATE TABLE public.attachment (
+    attachment_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    category character varying(50) NOT NULL
+);
+ALTER TABLE public.attachment ALTER COLUMN attachment_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.attachment_attachment_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1
+    );
+CREATE TABLE public.weapon_ammo (
+    weapon_id integer NOT NULL,
+    ammo_id integer NOT NULL
+);
+CREATE TABLE public.weapon_attachment (
+    weapon_id integer NOT NULL,
+    attachment_id integer NOT NULL,
+    weapon_unlock_level integer,
+    unlock_cost integer,
+    effect character varying(255)
+);
 ALTER TABLE ONLY public.account ADD CONSTRAINT account_pkey PRIMARY KEY (account_id);
 ALTER TABLE ONLY public.account_role ADD CONSTRAINT account_role_pkey PRIMARY KEY (account_id, role_id);
 ALTER TABLE ONLY public.armor ADD CONSTRAINT armor_pkey PRIMARY KEY (armor_id);
@@ -403,6 +461,10 @@ ALTER TABLE ONLY public.stratagem_entity ADD CONSTRAINT stratagem_entity_pkey PR
 ALTER TABLE ONLY public.stratagem_entity ADD CONSTRAINT stratagem_entity_stratagem_id_key UNIQUE (stratagem_id);
 ALTER TABLE ONLY public.stratagem_ship_module ADD CONSTRAINT stratagem_ship_module_pkey PRIMARY KEY (stratagem_id, upgrade_id);
 ALTER TABLE ONLY public.weapon ADD CONSTRAINT weapon_pkey PRIMARY KEY (weapon_id);
+ALTER TABLE ONLY public.ammo ADD CONSTRAINT ammo_pkey PRIMARY KEY (ammo_id);
+ALTER TABLE ONLY public.attachment ADD CONSTRAINT attachment_pkey PRIMARY KEY (attachment_id);
+ALTER TABLE ONLY public.weapon_ammo ADD CONSTRAINT weapon_ammo_pkey PRIMARY KEY (weapon_id, ammo_id);
+ALTER TABLE ONLY public.weapon_attachment ADD CONSTRAINT weapon_attachment_pkey PRIMARY KEY (weapon_id, attachment_id);
 CREATE INDEX idx_changelog_patch ON public.stratagem_changelog USING btree (patch_version);
 CREATE INDEX idx_changelog_stratagem ON public.stratagem_changelog USING btree (stratagem_id);
 CREATE INDEX idx_sattack_stratagem ON public.stratagem_attack USING btree (stratagem_id);
@@ -752,3 +814,140 @@ COPY public.super_credit_pickup (pickup_id, mission_id, amount, collected, colle
 10	5	10	f	\N	\N
 \.
 SELECT pg_catalog.setval('public.super_credit_pickup_pickup_id_seq', 10, true);
+INSERT INTO public.weapon (name, damage, mag_size, max_ammo, recoil, penetration_level, unlock_level, req_cost, image_url, weapon_type, super_credits_cost, fire_rate, horizontal_recoil, vertical_recoil, spread_horizontal, spread_vertical, sway, ergonomics, spare_magazines, starting_magazines, mags_from_supply, mags_from_ammo_box)
+VALUES ('AR-59 Suppressor', NULL, 45, NULL, 13.25, NULL, NULL, NULL, NULL, 'PRIMARY', NULL, 850, 6.5, 20, 2.0, 2.0, 1, 60, 8, 6, 8, 4);
+SELECT pg_catalog.setval('public.weapon_weapon_id_seq', 11, true);
+COPY public.ammo (name, caliber, mass_grams, initial_velocity_ms, drag_factor_pct, gravity_factor_pct, penetration_slowdown_pct, damage_standard, damage_standard_type, damage_durable, damage_durable_type, penetration_direct, penetration_direct_name, penetration_slight_angle, penetration_slight_name, penetration_large_angle, penetration_large_name, penetration_extreme_angle, penetration_extreme_name, demolition_force, stagger_force, push_force) FROM stdin;
+5.5x50mm SUBSONIC P	5.5mm	4.5	330	30	120	25	80	Ballistic	20	Ballistic	2	Light	2	Light	2	Light	0	Unarmored I	10	10	10
+5.5x50mm Full Metal Jacket P	5.5mm	4.5	900	30	100	25	90	Ballistic	22	Ballistic	2	Light	2	Light	2	Light	0	Unarmored I	10	15	10
+8x60mm Full Metal Jacket P	8mm	11	820	30	100	25	95	Ballistic	23	Ballistic	3	Medium	3	Medium	3	Medium	1	Unarmored II	10	15	12
+12x25mm Full Metal Jacket P2	12mm	15	285	120	100	25	110	Ballistic	22	Ballistic	2	Light	2	Light	2	Light	0	Unarmored I	10	10	5
+9x70mm Full Metal Jacket P	9mm	20	850	30	100	25	165	Ballistic	45	Ballistic	2	Light	2	Light	2	Light	0	Unarmored I	10	15	14
+13x40mm Full Metal Jacket P	12mm	15	550	120	100	25	225	Ballistic	75	Ballistic	4	Heavy	4	Heavy	4	Heavy	0	Unarmored I	10	20	10
+9x20mm Full Metal Jacket P1	9mm	7	375	120	100	25	70	Ballistic	12	Ballistic	2	Light	2	Light	2	Light	0	Unarmored I	10	10	4
+40mm Grenade	40mm	50	100	120	100	25	250	Ballistic	\N	\N	3	Medium	3	Medium	3	Medium	0	Unarmored I	30	40	10
+8x60mm Full Metal Jacket P1	8mm	11	820	30	100	25	90	Ballistic	23	Ballistic	3	Medium	3	Medium	3	Medium	1	Unarmored II	10	20	12
+G-12 Explosive Payload	\N	\N	\N	\N	\N	\N	800	Explosion	\N	\N	4	Heavy	4	Heavy	4	Heavy	0	Unarmored I	30	30	40
+G-6 Frag Shrapnel	10mm	100	30	40	100	25	110	Ballistic	35	Ballistic	3	Medium	3	Medium	2	Light	0	Unarmored I	10	10	20
+\.
+SELECT pg_catalog.setval('public.ammo_ammo_id_seq', 11, true);
+COPY public.weapon_ammo (weapon_id, ammo_id) FROM stdin;
+1	2
+2	3
+3	4
+4	5
+5	6
+6	7
+7	8
+8	9
+9	10
+10	11
+11	1
+\.
+COPY public.attachment (name, category) FROM stdin;
+Reflex Sight Mk2	OPTICS
+Reflex Sight	OPTICS
+1.5x Tube Red Dot	OPTICS
+Holographic Sight	OPTICS
+Iron Sight	OPTICS
+4x Combat Scope	OPTICS
+Extended Magazine	MAGAZINE
+Short Magazine	MAGAZINE
+Drum Magazine	MAGAZINE
+Laser Sight	UNDERBARREL
+No Underbarrel	UNDERBARREL
+Laser Sight W/ Flashlight	UNDERBARREL
+Vertical Foregrip	UNDERBARREL
+Angled Foregrip	UNDERBARREL
+Flashlight Vertical Foregrip	UNDERBARREL
+Laser Sight Angled Foregrip	UNDERBARREL
+2x Tube Red Dot	OPTICS
+10x Sniper Scope	OPTICS
+Flash Hider	MUZZLE
+Muzzle Brake	MUZZLE
+Compensator	MUZZLE
+\.
+SELECT pg_catalog.setval('public.attachment_attachment_id_seq', 21, true);
+COPY public.weapon_attachment (weapon_id, attachment_id, weapon_unlock_level, unlock_cost, effect) FROM stdin;
+11	1	1	0	\N
+11	2	4	5000	\N
+11	3	8	5000	\N
+11	4	9	13000	\N
+11	5	18	5000	ERGONOMICS 5
+11	6	21	13000	ERGONOMICS -2
+11	7	1	0	\N
+11	8	11	7000	ERGONOMICS 10, CAPACITY -15, RELOAD TIME -1, MAGAZINES 4
+11	9	24	25000	ERGONOMICS -15, CAPACITY 15, RELOAD TIME 1, MAGAZINES -2
+11	10	1	0	\N
+11	11	1	0	\N
+11	12	2	3000	ERGONOMICS -2
+11	13	6	5000	ERGONOMICS -2, VERTICAL RECOIL -6
+11	14	13	7000	ERGONOMICS 8, VERTICAL RECOIL 7
+11	15	16	7000	ERGONOMICS -4, VERTICAL RECOIL -6
+11	16	23	7000	ERGONOMICS 6, VERTICAL RECOIL 7
+1	17	1	0	\N
+1	2	4	5000	ERGONOMICS 1
+1	4	8	7000	ERGONOMICS 1
+1	1	11	7000	ERGONOMICS 1
+1	5	18	7000	ERGONOMICS 6
+1	6	21	25000	ERGONOMICS -1
+1	7	1	0	\N
+1	8	14	7000	ERGONOMICS 10, CAPACITY -15, RELOAD TIME -1, MAGAZINES 4
+1	9	24	25000	ERGONOMICS -15, CAPACITY 15, RELOAD TIME 1, MAGAZINES -2
+1	19	3	3000	ERGONOMICS -3, HORIZONTAL RECOIL 2, VERTICAL RECOIL 2
+1	20	12	5000	ERGONOMICS -5, HORIZONTAL RECOIL 3
+1	21	22	13000	ERGONOMICS -5
+1	12	1	0	\N
+1	11	1	0	ERGONOMICS 5
+1	13	2	3000	VERTICAL RECOIL -5
+1	14	6	5000	ERGONOMICS 10, VERTICAL RECOIL 5
+1	15	16	5000	ERGONOMICS -2, VERTICAL RECOIL -5
+1	16	23	7000	ERGONOMICS 8, VERTICAL RECOIL 5
+2	20	1	0	ERGONOMICS 5, HORIZONTAL RECOIL -5
+2	19	11	5000	ERGONOMICS 2, HORIZONTAL RECOIL -3, VERTICAL RECOIL -7
+2	21	21	13000	HORIZONTAL RECOIL -5, VERTICAL RECOIL -18
+2	17	1	0	\N
+2	2	4	5000	ERGONOMICS 1
+2	4	8	7000	ERGONOMICS 1
+2	1	14	5000	ERGONOMICS 1
+2	6	18	13000	ERGONOMICS -1
+2	18	24	25000	ERGONOMICS -3
+2	13	6	5000	ERGONOMICS -5, VERTICAL RECOIL -12
+2	14	13	7000	ERGONOMICS 5, VERTICAL RECOIL 15
+2	12	2	3000	ERGONOMICS -5
+2	15	16	7000	ERGONOMICS -7, VERTICAL RECOIL -12
+2	16	23	7000	ERGONOMICS 3, VERTICAL RECOIL 15
+3	2	1	0	\N
+3	3	4	5000	\N
+3	1	8	7000	\N
+3	4	19	13000	\N
+3	17	23	25000	\N
+3	7	1	0	\N
+3	8	9	7000	ERGONOMICS 10, CAPACITY -10, RELOAD TIME -1, MAGAZINES 2
+3	9	24	25000	ERGONOMICS -15, CAPACITY 30, RELOAD TIME 1, MAGAZINES -3
+3	19	3	5000	ERGONOMICS -3, HORIZONTAL RECOIL 2
+3	20	13	7000	ERGONOMICS -5, HORIZONTAL RECOIL 4
+3	21	21	7000	ERGONOMICS -5, VERTICAL RECOIL 4
+3	13	2	3000	VERTICAL RECOIL 3
+3	14	7	5000	ERGONOMICS 10, VERTICAL RECOIL 3
+3	15	17	7000	ERGONOMICS -2, VERTICAL RECOIL 3
+3	16	22	7000	ERGONOMICS 8, VERTICAL RECOIL 3
+4	19	2	5000	ERGONOMICS -3, HORIZONTAL RECOIL 4, VERTICAL RECOIL 6
+4	20	11	7000	ERGONOMICS -5, HORIZONTAL RECOIL 8
+4	21	21	13000	ERGONOMICS -5, VERTICAL RECOIL -15
+4	6	1	0	\N
+4	3	4	5000	ERGONOMICS 2
+4	2	9	7000	ERGONOMICS 2
+4	4	14	13000	ERGONOMICS 2
+4	1	19	13000	ERGONOMICS 2
+4	5	24	25000	ERGONOMICS 7
+4	12	3	3000	ERGONOMICS -5
+4	13	7	5000	ERGONOMICS -5, VERTICAL RECOIL -11
+4	14	12	7000	ERGONOMICS 5, VERTICAL RECOIL 12
+4	15	17	7000	ERGONOMICS -7, VERTICAL RECOIL -11
+4	16	22	13000	ERGONOMICS 3, VERTICAL RECOIL 12
+\.
+ALTER TABLE ONLY public.weapon_ammo ADD CONSTRAINT weapon_ammo_weapon_fk FOREIGN KEY (weapon_id) REFERENCES public.weapon(weapon_id);
+ALTER TABLE ONLY public.weapon_ammo ADD CONSTRAINT weapon_ammo_ammo_fk FOREIGN KEY (ammo_id) REFERENCES public.ammo(ammo_id);
+ALTER TABLE ONLY public.weapon_attachment ADD CONSTRAINT weapon_attachment_weapon_fk FOREIGN KEY (weapon_id) REFERENCES public.weapon(weapon_id);
+ALTER TABLE ONLY public.weapon_attachment ADD CONSTRAINT weapon_attachment_attachment_fk FOREIGN KEY (attachment_id) REFERENCES public.attachment(attachment_id);

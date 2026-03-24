@@ -59,6 +59,13 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod.DELETE, "/missions/create").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.PUT, "/missions/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/mstats/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/ammo/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/ammo/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/ammo/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/ammo/**").permitAll()
+                        //.requestMatchers(HttpMethod.POST, "/ammo/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/ammo/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.PUT, "/ammo/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
