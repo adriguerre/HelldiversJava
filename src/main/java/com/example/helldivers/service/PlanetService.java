@@ -27,12 +27,14 @@ public class PlanetService {
         this.planetRepository = planetRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Planet> getAllPlanets(String name, String sector, Double coordinatesX, Double coordinatesY,
                                       Double maxHealth, BiomeType biomeType, FactionType factionType){
         return planetRepository.findAll(PlanetSpecification.withFilters(name, sector, coordinatesX,
                 coordinatesY, maxHealth, biomeType, factionType));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Planet> getPlanetById(Integer planetId){
         return planetRepository.findById(planetId);
     }
