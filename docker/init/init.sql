@@ -966,9 +966,9 @@ UPDATE public.weapon SET fire_rate=60,  horizontal_recoil=0.5, vertical_recoil=1
 
 -- Extra weapon_ammo links so weapons have multiple ammo types
 INSERT INTO public.weapon_ammo (weapon_id, ammo_id) VALUES
-(1, 9),
-(2, 3),
-(3, 7),
-(4, 5),
-(5, 6),
-(8, 5);
+(1, 3),
+(2, 5),
+(3, 9),
+(4, 3),
+(5, 3),
+(8, 3);

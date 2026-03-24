@@ -37,7 +37,7 @@ public class AmmoController {
             return ResponseEntity.ok(ammoList);
     }
 
-    @GetMapping("{ammoId}")
+    @GetMapping("/{ammoId}")
     public ResponseEntity<?> getAmmoById(@PathVariable Integer ammoId){
         Optional<Ammo> ammo = ammoService.getAmmoById(ammoId);
 
