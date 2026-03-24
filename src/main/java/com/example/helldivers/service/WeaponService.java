@@ -1,7 +1,9 @@
 package com.example.helldivers.service;
 
 import com.example.helldivers.domain.Ammo;
+import com.example.helldivers.domain.Attachment;
 import com.example.helldivers.domain.Weapon;
+import com.example.helldivers.domain.WeaponAttachment;
 import com.example.helldivers.enums.WeaponType;
 import com.example.helldivers.repository.AmmoRepository;
 import com.example.helldivers.repository.WeaponRepository;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -109,5 +112,49 @@ public class WeaponService {
         if (!weaponRepository.existsById(weaponId)) return false;
         weaponRepository.deleteById(weaponId);
         return true;
+    }
+
+    public List<Ammo> getAmmoByWeapon(Integer weaponId) {
+        return weaponRepository.findById(weaponId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Weapon with ID [" + weaponId + "] not found"))
+                .getAmmoTypes();
+    }
+
+    public List<WeaponAttachment> getAttachmentsByWeapon(Integer weaponId) {
+        return weaponRepository.findById(weaponId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Weapon with ID [" + weaponId + "] not found"))
+                .getAttachments();
+    }
+
+    public List<Weapon> getWeaponsByAmmo(Integer ammoId) {
+        return weaponRepository.findByAmmoId(ammoId);
+    }
+
+    public List<Weapon> getWeaponsByAttachment(Integer attachmentId) {
+        return weaponRepository.findByAttachmentId(attachmentId);
+    }
+
+    public Map<String, Object> getWeaponStats(Integer weaponId) {
+        Weapon w = weaponRepository.findById(weaponId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Weapon with ID [" + weaponId + "] not found"));
+
+        Map<String, Object> stats = new java.util.LinkedHashMap<>();
+        stats.put("weapon_id",          w.getWeaponId());
+        stats.put("name",               w.getName());
+        stats.put("fire_rate",          w.getFireRate());
+        stats.put("recoil",             w.getRecoil());
+        stats.put("horizontal_recoil",  w.getHorizontalRecoil());
+        stats.put("vertical_recoil",    w.getVerticalRecoil());
+        stats.put("spread_horizontal",  w.getSpreadHorizontal());
+        stats.put("spread_vertical",    w.getSpreadVertical());
+        stats.put("sway",               w.getSway());
+        stats.put("ergonomics",         w.getErgonomics());
+        stats.put("mag_size",           w.getMagSize());
+        stats.put("max_ammo",           w.getMaxAmmo());
+        stats.put("spare_magazines",    w.getSpareMagazines());
+        return stats;
     }
 }

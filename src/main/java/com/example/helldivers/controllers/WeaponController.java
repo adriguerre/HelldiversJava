@@ -64,6 +64,37 @@ public class WeaponController {
                 .body("Weapon with ID [" + weaponId + "] not found");
     }
 
+    @GetMapping("/{weaponId}/ammo")
+    public ResponseEntity<?> getAmmoByWeapon(@PathVariable Integer weaponId) {
+        return ResponseEntity.ok(weaponService.getAmmoByWeapon(weaponId));
+    }
+
+    @GetMapping("/{weaponId}/attachments")
+    public ResponseEntity<?> getAttachmentsByWeapon(@PathVariable Integer weaponId) {
+        return ResponseEntity.ok(weaponService.getAttachmentsByWeapon(weaponId));
+    }
+
+    @GetMapping("/ammo/{ammoId}")
+    public ResponseEntity<?> getWeaponsByAmmo(@PathVariable Integer ammoId) {
+        List<Weapon> weapons = weaponService.getWeaponsByAmmo(ammoId);
+        if (weapons.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(weapons);
+    }
+
+    @GetMapping("/attachment/{attachmentId}")
+    public ResponseEntity<?> getWeaponsByAttachment(@PathVariable Integer attachmentId) {
+        List<Weapon> weapons = weaponService.getWeaponsByAttachment(attachmentId);
+        if (weapons.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(weapons);
+    }
+
+    @GetMapping("/{weaponId}/stats")
+    public ResponseEntity<?> getWeaponStats(@PathVariable Integer weaponId) {
+        return ResponseEntity.ok(weaponService.getWeaponStats(weaponId));
+    }
+
     @PostMapping("/{weaponId}/ammo/{ammoId}")
     public ResponseEntity<?> addAmmoToWeapon(@PathVariable Integer weaponId, @PathVariable Integer ammoId) {
         return weaponService.addAmmoToWeapon(weaponId, ammoId)
