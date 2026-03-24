@@ -16,6 +16,9 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -49,6 +52,12 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod.DELETE, "/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/accounts/**").permitAll() //Admin
                         .requestMatchers(HttpMethod.GET, "/weapons/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/weapons/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/weapons/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/weapons/**").permitAll()
+                        //.requestMatchers(HttpMethod.POST, "/weapons/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.DELETE, "/weapons/**").hasRole("ADMIN")
+                        //.requestMatchers(HttpMethod.PUT, "/weapons/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/armor/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/stratagems/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/missions/**").permitAll()
@@ -63,10 +72,29 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/ammo/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/ammo/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/ammo/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/attachments/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/attachments/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/attachments/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/attachments/**").permitAll()
                         //.requestMatchers(HttpMethod.POST, "/ammo/**").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.DELETE, "/ammo/**").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.PUT, "/ammo/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(403);
+                            response.setContentType("application/json");
+                            response.getWriter().write("""
+                                    {
+                                      "status": 403,
+                                      "error": "Forbidden",
+                                      "message": "This endpoint is not permitted. Add it to SecurityConfig to allow access.",
+                                      "path": "%s"
+                                    }
+                                    """.formatted(request.getRequestURI()));
+                        })
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

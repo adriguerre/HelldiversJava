@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,5 +34,47 @@ public class WeaponController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.ok(weapons);
+    }
+
+    @GetMapping("/{weaponId}")
+    public ResponseEntity<?> getWeaponById(@PathVariable Integer weaponId) {
+        return weaponService.getWeaponById(weaponId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createWeapon(@RequestBody Weapon weapon) {
+        Weapon created = weaponService.createWeapon(weapon);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(created.getWeaponId()).toUri();
+        return ResponseEntity.created(location).body(created);
+    }
+
+    @PutMapping("/update/{weaponId}")
+    public ResponseEntity<?> updateWeapon(@PathVariable Integer weaponId, @RequestBody Weapon weapon) {
+        return ResponseEntity.ok(weaponService.updateWeapon(weaponId, weapon));
+    }
+
+    @DeleteMapping("/delete/{weaponId}")
+    public ResponseEntity<?> deleteWeapon(@PathVariable Integer weaponId) {
+        if (weaponService.deleteWeapon(weaponId))
+            return ResponseEntity.ok("Weapon with ID [" + weaponId + "] deleted successfully");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Weapon with ID [" + weaponId + "] not found");
+    }
+
+    @PostMapping("/{weaponId}/ammo/{ammoId}")
+    public ResponseEntity<?> addAmmoToWeapon(@PathVariable Integer weaponId, @PathVariable Integer ammoId) {
+        return weaponService.addAmmoToWeapon(weaponId, ammoId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{weaponId}/ammo/{ammoId}")
+    public ResponseEntity<?> removeAmmoFromWeapon(@PathVariable Integer weaponId, @PathVariable Integer ammoId) {
+        return weaponService.removeAmmoFromWeapon(weaponId, ammoId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
