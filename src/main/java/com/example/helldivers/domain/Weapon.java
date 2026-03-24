@@ -88,6 +88,7 @@ public class Weapon {
     )
     @JsonProperty("ammo_types")
     @BatchSize(size = 25)
+    //In this case batch size is in a variable because Hibernate already has all weapon Entities, but it doesn't have the ammo relative to each weapon
     private List<Ammo> ammoTypes;
 
     @OneToMany(mappedBy = "weapon")

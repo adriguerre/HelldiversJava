@@ -1,8 +1,10 @@
 package com.example.helldivers.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
+@BatchSize(size = 25)
 public class Attachment {
 
     @Id

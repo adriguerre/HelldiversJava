@@ -3,6 +3,7 @@ package com.example.helldivers.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -131,6 +132,7 @@ public class StratagemAttack {
     private Short pushForce;
 
     @OneToMany(mappedBy = "attack", cascade = CascadeType.ALL)
+    @BatchSize(size = 25)
     private List<StratagemAttackStatus> status;
 
     public StratagemAttack() {}

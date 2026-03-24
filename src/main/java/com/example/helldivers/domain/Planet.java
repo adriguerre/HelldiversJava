@@ -4,8 +4,10 @@ package com.example.helldivers.domain;
 import com.example.helldivers.enums.BiomeType;
 import com.example.helldivers.enums.FactionType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
+@BatchSize(size = 25)
 public class Planet {
 
     @Id

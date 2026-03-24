@@ -5,10 +5,13 @@ import com.example.helldivers.enums.PlatformType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.BatchSize;
 
 import java.sql.Timestamp;
 
 @Entity
+@BatchSize(size = 25)
+//In this case batch size is in class so Hibernate can hold all planet_id to load them
 public class Account {
 
     @Id
