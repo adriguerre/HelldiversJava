@@ -1,5 +1,6 @@
 package com.example.helldivers.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +10,7 @@ public class PassiveBonus {
     @Id
     @GeneratedValue
     @Column(name = "passive_id")
+    @JsonProperty("passive_id")
     private Integer passiveId;
     private String name;
     private String description;

@@ -6,11 +6,10 @@ import com.example.helldivers.service.ArmorService;
 import com.example.helldivers.utils.UpdateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,13 +25,38 @@ public class ArmorController {
     @GetMapping
     public ResponseEntity<?> getArmor(@RequestParam(required = false) String armor_slot,
                                       @RequestParam(required = false) Integer passive_id,
-                                      @RequestParam(required = false) Boolean shop){
-
+                                      @RequestParam(required = false) Boolean shop) {
         List<Armor> armorList = armorService.getAllArmors(UpdateUtils.parseEnum(ArmorSlot.class, armor_slot), passive_id, shop);
-
-        if(armorList.isEmpty())
+        if (armorList.isEmpty())
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
         return ResponseEntity.ok(armorList);
+    }
+
+    @GetMapping("/{armorId}")
+    public ResponseEntity<?> getArmorById(@PathVariable Integer armorId) {
+        return armorService.getArmorById(armorId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createArmor(@RequestBody Armor armor) {
+        Armor created = armorService.createArmor(armor);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(created.getArmorId()).toUri();
+        return ResponseEntity.created(location).body(created);
+    }
+
+    @PutMapping("/update/{armorId}")
+    public ResponseEntity<?> updateArmor(@PathVariable Integer armorId, @RequestBody Armor armor) {
+        return ResponseEntity.ok(armorService.updateArmor(armorId, armor));
+    }
+
+    @DeleteMapping("/delete/{armorId}")
+    public ResponseEntity<?> deleteArmor(@PathVariable Integer armorId) {
+        if (armorService.deleteArmor(armorId))
+            return ResponseEntity.ok("Armor with ID [" + armorId + "] deleted successfully");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Armor with ID [" + armorId + "] not found");
     }
 }

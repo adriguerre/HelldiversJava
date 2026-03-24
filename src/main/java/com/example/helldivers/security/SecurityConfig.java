@@ -59,7 +59,13 @@ public class SecurityConfig {
                         //.requestMatchers(HttpMethod.DELETE, "/weapons/**").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.PUT, "/weapons/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/armor/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/armor/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/armor/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/armor/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/stratagems/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/stratagems/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/stratagems/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/stratagems/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/missions/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/missions/**").permitAll() //Admin
                         .requestMatchers(HttpMethod.DELETE, "/missions/**").permitAll() //Admin

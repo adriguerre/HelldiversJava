@@ -951,3 +951,24 @@ ALTER TABLE ONLY public.weapon_ammo ADD CONSTRAINT weapon_ammo_weapon_fk FOREIGN
 ALTER TABLE ONLY public.weapon_ammo ADD CONSTRAINT weapon_ammo_ammo_fk FOREIGN KEY (ammo_id) REFERENCES public.ammo(ammo_id);
 ALTER TABLE ONLY public.weapon_attachment ADD CONSTRAINT weapon_attachment_weapon_fk FOREIGN KEY (weapon_id) REFERENCES public.weapon(weapon_id);
 ALTER TABLE ONLY public.weapon_attachment ADD CONSTRAINT weapon_attachment_attachment_fk FOREIGN KEY (attachment_id) REFERENCES public.attachment(attachment_id);
+
+-- Weapon stats (fire_rate, recoil, spread, etc.)
+UPDATE public.weapon SET fire_rate=640, horizontal_recoil=4.2, vertical_recoil=8.3, spread_horizontal=1.1, spread_vertical=1.4, sway=0.8, ergonomics=72, spare_magazines=3, starting_magazines=4, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=1;
+UPDATE public.weapon SET fire_rate=280, horizontal_recoil=6.5, vertical_recoil=14.0, spread_horizontal=0.8, spread_vertical=1.0, sway=0.4, ergonomics=58, spare_magazines=2, starting_magazines=3, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=2;
+UPDATE public.weapon SET fire_rate=900, horizontal_recoil=3.0, vertical_recoil=5.5, spread_horizontal=1.5, spread_vertical=2.0, sway=1.2, ergonomics=80, spare_magazines=4, starting_magazines=5, mags_from_supply=3, mags_from_ammo_box=1 WHERE weapon_id=3;
+UPDATE public.weapon SET fire_rate=150, horizontal_recoil=2.0, vertical_recoil=18.0, spread_horizontal=0.4, spread_vertical=0.5, sway=0.2, ergonomics=50, spare_magazines=2, starting_magazines=3, mags_from_supply=1, mags_from_ammo_box=1 WHERE weapon_id=4;
+UPDATE public.weapon SET fire_rate=450, horizontal_recoil=5.0, vertical_recoil=10.0, spread_horizontal=1.2, spread_vertical=1.5, sway=0.9, ergonomics=68, spare_magazines=3, starting_magazines=4, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=5;
+UPDATE public.weapon SET fire_rate=1000, horizontal_recoil=3.5, vertical_recoil=6.0, spread_horizontal=1.8, spread_vertical=2.2, sway=1.5, ergonomics=75, spare_magazines=3, starting_magazines=4, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=6;
+UPDATE public.weapon SET fire_rate=60,  horizontal_recoil=1.0, vertical_recoil=3.0, spread_horizontal=0.2, spread_vertical=0.2, sway=0.1, ergonomics=40, spare_magazines=1, starting_magazines=2, mags_from_supply=1, mags_from_ammo_box=0 WHERE weapon_id=7;
+UPDATE public.weapon SET fire_rate=500, horizontal_recoil=8.0, vertical_recoil=20.0, spread_horizontal=2.0, spread_vertical=3.0, sway=2.0, ergonomics=35, spare_magazines=2, starting_magazines=3, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=8;
+UPDATE public.weapon SET fire_rate=60,  horizontal_recoil=0.5, vertical_recoil=1.0, spread_horizontal=0.0, spread_vertical=0.0, sway=0.0, ergonomics=30, spare_magazines=2, starting_magazines=3, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=9;
+UPDATE public.weapon SET fire_rate=60,  horizontal_recoil=0.5, vertical_recoil=1.0, spread_horizontal=0.0, spread_vertical=0.0, sway=0.0, ergonomics=32, spare_magazines=3, starting_magazines=4, mags_from_supply=2, mags_from_ammo_box=1 WHERE weapon_id=10;
+
+-- Extra weapon_ammo links so weapons have multiple ammo types
+INSERT INTO public.weapon_ammo (weapon_id, ammo_id) VALUES
+(1, 9),
+(2, 3),
+(3, 7),
+(4, 5),
+(5, 6),
+(8, 5);
