@@ -1,6 +1,7 @@
 package com.example.helldivers.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -36,9 +37,11 @@ public class ShipUpgrade {
     private ShipUpgrade parentUpgrade;
 
     @OneToMany(mappedBy = "parentUpgrade")
+    @BatchSize(size = 25)
     private List<ShipUpgrade> childUpgrades;
 
     @ManyToMany(mappedBy = "shipModules")
+    @BatchSize(size = 25)
     private List<Stratagem> stratagems;
 
     public ShipUpgrade() {}

@@ -726,11 +726,20 @@ COPY public.objective (objective_id, name, description, is_primary, mission_id, 
 \.
 COPY public.stratagem_entity (entity_id, stratagem_id, entity_name, main_health, main_armor, main_armor_level, horizontal_turn_speed, vertical_turn_speed, vertical_limit_min, vertical_limit_max, lifetime_secs, mags_from_supply, mags_from_ammo_box, max_rounds, starting_rounds, fire_rate_rpm, recoil, horizontal_recoil, vertical_recoil, spread_horizontal, spread_vertical, sway, ergonomics, capacity) FROM stdin;
 3	11	A/FLAM-40 Flame Sentry	200	Light	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+4	3	Recoilless Rifle	800	Medium	3	\N	\N	-10.0	45.0	\N	2	1	5	5	\N	5.0	2.0	4.5	0.5	0.5	1.0	50	1
+5	4	Shield Generator Relay	600	Heavy	5	\N	\N	\N	\N	180	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+6	7	Resupply Pod	200	Light	1	\N	\N	\N	\N	120	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 COPY public.stratagem_attack (attack_id, stratagem_id, attack_name, attack_type, sort_order, damage_element, damage_standard, damage_standard_type, damage_vs_durable, damage_vs_durable_type, inner_radius_m, outer_radius_m, shockwave_radius_m, inner_damage, inner_damage_type, inner_durable, inner_durable_type, outer_damage, outer_durable, aoe_penetration_level, aoe_penetration_name, penetration_direct, penetration_direct_name, penetration_slight_angle, penetration_slight_name, penetration_large_angle, penetration_large_name, penetration_extreme_angle, penetration_extreme_name, projectile_name, caliber, mass_grams, initial_velocity_ms, drag_factor_pct, gravity_factor_pct, penetration_slowdown_pct, demolition_force, stagger_force, push_force) FROM stdin;
 1	11	Flame Sentry Stream	stream	1	Fire	150	Fire	150	Fire	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	4	Heavy	4	Heavy	4	Heavy	4	Heavy	\N	\N	\N	\N	\N	\N	\N	10	5	5
 3	11	Flame Sentry Death Explosion	explosion	2	Fire	\N	\N	\N	\N	0.4	4	8	400	Fire	400	Fire	399	399	3	Medium	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	30	20	40
 5	11	DPS Fire	dps	3	Fire	100	Fire	100	Fire	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	4	Heavy	4	Heavy	4	Heavy	0	Unarmored I	\N	\N	\N	\N	\N	\N	\N	0	0	0
+6	1	Eagle Strike Bomb	explosion	1	Explosive	1000	Explosive	100	Explosive	2.0	10.0	12.0	1000	Explosive	100	Explosive	300	30	5	Light Vehicle	5	Light Vehicle	4	Heavy	3	Medium	1	Light	\N	\N	\N	\N	\N	100	\N	100	80	100
+7	2	Railcannon Slug	direct	1	Kinetic	2000	Kinetic	2000	Kinetic	\N	\N	3.0	\N	\N	\N	\N	\N	\N	6	Super Heavy	6	Super Heavy	6	Super Heavy	6	Super Heavy	5	Heavy Vehicle	Railcannon Slug	\N	50000.0	2000	0	0	5	200	150	200
+8	5	Cluster Bomblet	explosion	1	Explosive	350	Explosive	35	Explosive	1.5	5.0	6.0	350	Explosive	35	Explosive	100	10	3	Medium	3	Medium	2	Light	1	Unarmored II	0	Unarmored I	\N	\N	\N	\N	\N	100	\N	40	30	50
+9	6	Orbital Laser Beam	laser	1	Laser	1500	Laser	150	Laser	\N	3.0	\N	\N	\N	\N	\N	1500	150	5	Light Vehicle	5	Light Vehicle	4	Heavy	3	Medium	2	Light	\N	\N	\N	\N	\N	\N	\N	50	40	60
+10	9	Napalm Incendiary	area	1	Fire	650	Fire	200	Fire	\N	12.0	\N	\N	\N	\N	\N	650	200	2	Light	2	Light	2	Light	1	Unarmored II	0	Unarmored I	\N	\N	\N	\N	\N	\N	\N	20	30	40
+11	10	Precision HE Shell	explosion	1	Explosive	2500	Explosive	250	Explosive	1.5	8.0	15.0	2500	Explosive	250	Explosive	600	60	6	Super Heavy	6	Super Heavy	5	Heavy Vehicle	4	Heavy	3	Medium	\N	\N	\N	\N	\N	100	\N	200	150	200
 \.
 COPY public.stratagem_attack_status (status_id, attack_id, sort_order, status_name, status_strength, status_duration_sec) FROM stdin;
 3	1	1	Fire	2	\N
@@ -751,10 +760,10 @@ SELECT pg_catalog.setval('public.planet_planet_id_seq', 10, true);
 SELECT pg_catalog.setval('public.role_role_id_seq', 3, true);
 SELECT pg_catalog.setval('public.squad_member_squad_member_id_seq', 10, true);
 SELECT pg_catalog.setval('public.squad_squad_id_seq', 10, true);
-SELECT pg_catalog.setval('public.stratagem_attack_attack_id_seq', 5, true);
+SELECT pg_catalog.setval('public.stratagem_attack_attack_id_seq', 11, true);
 SELECT pg_catalog.setval('public.stratagem_attack_status_status_id_seq', 4, true);
 SELECT pg_catalog.setval('public.stratagem_changelog_changelog_id_seq', 1, false);
-SELECT pg_catalog.setval('public.stratagem_entity_entity_id_seq', 3, true);
+SELECT pg_catalog.setval('public.stratagem_entity_entity_id_seq', 6, true);
 SELECT pg_catalog.setval('public.stratagem_id_stratagem_id_seq', 11, true);
 SELECT pg_catalog.setval('public.upgrade_id_seq', 10, true);
 SELECT pg_catalog.setval('public.weapon_weapon_id_seq', 10, true);

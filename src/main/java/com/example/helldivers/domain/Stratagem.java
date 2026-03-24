@@ -2,6 +2,7 @@ package com.example.helldivers.domain;
 
 import com.example.helldivers.enums.StratagemType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class Stratagem {
 
     // 1:N — stratagem_attack
     @OneToMany(mappedBy = "stratagem", cascade = CascadeType.ALL)
+    @BatchSize(size = 25)
     private List<StratagemAttack> attacks;
 
     // N:M — ship_upgrades from stratagem_ship_module
@@ -49,6 +51,7 @@ public class Stratagem {
             joinColumns = @JoinColumn(name = "stratagem_id"),
             inverseJoinColumns = @JoinColumn(name = "upgrade_id")
     )
+    @BatchSize(size = 25)
     private List<ShipUpgrade> shipModules;
 
     public Stratagem() {}

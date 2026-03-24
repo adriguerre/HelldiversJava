@@ -4,6 +4,7 @@ import com.example.helldivers.enums.WeaponType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -86,9 +87,11 @@ public class Weapon {
             inverseJoinColumns = @JoinColumn(name = "ammo_id")
     )
     @JsonProperty("ammo_types")
+    @BatchSize(size = 25)
     private List<Ammo> ammoTypes;
 
     @OneToMany(mappedBy = "weapon")
+    @BatchSize(size = 25)
     private List<WeaponAttachment> attachments;
 
     public Weapon() {
