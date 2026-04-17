@@ -36,7 +36,7 @@ build/
 ### Properties ###
 env.properties
 .env
-
+.claude
 ### SQL ###
 *.sql
 !docker/init/*.sql

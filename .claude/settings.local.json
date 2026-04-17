@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -E \"\\\\.java$\")",
-      "Bash(xargs grep:*)"
-    ]
-  }
-}
